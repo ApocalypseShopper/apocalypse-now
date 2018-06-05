@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "apocalypse-now",
   "version": "1.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "When the dawn of humanity creeps in the shadow of the valley of death, we got your supplies!",
   "engines": {
     "node": ">= 7.0.0"
   },
