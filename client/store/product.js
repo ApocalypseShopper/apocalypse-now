@@ -1,21 +1,17 @@
 import axios from 'axios'
 
 //Action types 
-
 const GET_PRODUCTS = 'GET_PRODUCTS'
 
 //Initial state 
-
 const initialState = {
     allProducts: []
 }
 
 //Action creators
-
 const getProducts = allProducts => ({type: GET_PRODUCTS, allProducts})
 
 //Thunk creators
-
 export const fetchProducts = () => {
     return dispatch => {
         axios.get('/api/products')
@@ -28,9 +24,7 @@ export const fetchProducts = () => {
 }
 
 //Reducer
-
 export default function (state = initialState, action) {
-    console.log(action)
     switch(action.type){
         case GET_PRODUCTS: {
             return {

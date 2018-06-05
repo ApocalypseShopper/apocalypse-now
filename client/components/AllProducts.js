@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { fetchProducts } from '../store/product'
-console.log(fetchProducts)
 
 /**
  * COMPONENT
@@ -17,7 +16,6 @@ class AllProducts extends React.Component {
   }
 
   render(){
-    console.log(this.props.products)
     const products = this.props.products || []
     return (
       <div>
