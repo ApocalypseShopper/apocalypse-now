@@ -9,4 +9,12 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/:productId', (req, res, next) => {
+    Product.findById(Number(req.params.productId))
+    .then(foundProduct => {
+        res.send(foundProduct)
+    })
+    .catch(next)
+})
+
 module.exports = router
