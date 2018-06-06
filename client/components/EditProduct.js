@@ -17,6 +17,10 @@ class AddProduct extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    componentDidMount(){
+        this.props.loadProduct()
+    }
+
     handleChange(event){
         let name = event.target.name
         let value = event.target.value
@@ -72,10 +76,10 @@ const mapState = (state) => {
     return { product }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
     return {
-        updateProduct: (user) =>{
-            dispatch(putProduct(user))
+        updateProduct: (id, product) =>{
+            dispatch(putProduct(id, product))
         },
         loadProduct: () => {
             dispatch(fetchSingleProduct(Number(ownProps.match.params.productId)))
