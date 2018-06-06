@@ -14,13 +14,11 @@ const initialState = {
 }
 
 //Action creators
-
 const getProducts = allProducts => ({type: GET_PRODUCTS, allProducts})
 const getSingleProduct = singleProduct => ({type: GET_SINGLE_PRODUCT, singleProduct})
 const createProduct = product => ({type: POST_PRODUCT, product})
 
 //Thunk creators
-
 export const fetchProducts = () => {
     return dispatch => {
         axios.get('/api/products')
@@ -55,7 +53,6 @@ export const postProduct = (product) => {
 }
 
 //Reducer
-
 export default function (state = initialState, action) {
     switch (action.type){
         case GET_PRODUCTS: {
