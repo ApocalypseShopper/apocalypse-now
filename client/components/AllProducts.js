@@ -26,7 +26,7 @@ class AllProducts extends React.Component {
             products.map(product => {
               return (
                 <li key={product.id}>
-                  <h3>{product.name} costs {product.price} and we have {product.quantity} on stock</h3>
+                  <h3>categories:  name: {product.title} costs {product.price} and we have {product.quantity} on stock</h3>
                 </li>
               )
             })
