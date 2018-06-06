@@ -10,7 +10,8 @@ class AddProduct extends Component {
             description: '',
             price: '',
             quantity: '',
-            imageUrl: ''
+            imageUrl: '',
+            category: ''
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -27,7 +28,8 @@ class AddProduct extends Component {
 
     handleSubmit(event){
         event.preventDefault()
-        this.props.addProduct(this.state)
+        let category = this.state.category ? this.state.category.split(' ') : null
+        this.props.addProduct({...this.state, category})
     }
 
     render(){
@@ -38,6 +40,8 @@ class AddProduct extends Component {
                     <input name="title" onChange={this.handleChange}/>
                     <label>Description</label>
                     <input name="description" onChange={this.handleChange}/>
+                    <label>Categories</label>
+                    <input name="category" onChange={this.handleChange}/>
                     <label>Price</label>
                     <input name="price" onChange={this.handleChange}/>
                     <label>Quantity</label>
