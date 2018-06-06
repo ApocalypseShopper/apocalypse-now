@@ -31,7 +31,6 @@ class AddProduct extends Component {
     }
 
     render(){
-        console.log(this.state)
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
