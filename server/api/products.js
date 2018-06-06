@@ -17,4 +17,4 @@ router.get('/:productId', (req, res, next) => {
     .catch(next)
 })
 
-module.exports = router
+module.exports = router;
