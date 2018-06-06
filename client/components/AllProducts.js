@@ -17,6 +17,7 @@ class AllProducts extends React.Component {
 
   render(){
     const products = this.props.products || []
+    console.log(products);
     return (
       <div>
         <ul>
@@ -24,7 +25,7 @@ class AllProducts extends React.Component {
             products.map(product => {
               return (
                 <li key={product.id}>
-                  <h3>categories:  name: {product.title} costs {product.price} and we have {product.quantity} on stock</h3>
+                  <h3>categories: {product.category}  name: {product.title} costs {product.price} and we have {product.quantity} on stock</h3>
                 </li>
               )
             })
