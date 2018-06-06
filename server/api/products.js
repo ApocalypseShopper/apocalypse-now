@@ -9,6 +9,14 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
+router.post('/', (req, res, next) => {
+    Product.create(req.body)
+    .then(createdProduct => {
+        res.status(201).send(createdProduct);
+    })
+    .catch(next)
+})
+
 router.get('/:productId', (req, res, next) => {
     Product.findById(Number(req.params.productId))
     .then(foundProduct => {

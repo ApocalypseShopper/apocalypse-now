@@ -4,6 +4,7 @@ import axios from 'axios'
 
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
+const POST_PRODUCT = 'POST_PRODUCT'
 
 //Initial state
 
@@ -15,6 +16,7 @@ const initialState = {
 //Action creators
 const getProducts = allProducts => ({type: GET_PRODUCTS, allProducts})
 const getSingleProduct = singleProduct => ({type: GET_SINGLE_PRODUCT, singleProduct})
+const createProduct = product => ({type: POST_PRODUCT, product})
 
 //Thunk creators
 export const fetchProducts = () => {
@@ -39,6 +41,17 @@ export const fetchSingleProduct = (productId) => {
     }
 }
 
+export const postProduct = (product) => {
+    return dispatch => {
+        axios.post('/api/products', product)
+        .then(res => res.data)
+        .then(createdProduct => {
+            dispatch(createProduct(createdProduct))
+        })
+        .catch(console.error)
+    }
+}
+
 //Reducer
 export default function (state = initialState, action) {
     switch (action.type){
@@ -48,14 +61,18 @@ export default function (state = initialState, action) {
                 allProducts: action.allProducts
             }
         }
-
         case GET_SINGLE_PRODUCT: {
             return {
               ...state,
               singleProduct: action.singleProduct
             }
         }
-
+        case POST_PRODUCT: {
+            return {
+                ...state,
+                allProducts: [...state.allProducts, action.product]
+            }
+        }
         default: {
             return state
         }
