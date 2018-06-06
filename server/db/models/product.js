@@ -29,6 +29,10 @@ const Product = db.define('product', {
         allowNull: false,
         defaultValue: 0
     },
+    category: {
+        type: Sequelize.ARRAY({type: Sequelize.STRING}),
+        defaultValue: ['survival'],
+    },
     imageUrl: {
         type: Sequelize.STRING,
         allowNull: false,
