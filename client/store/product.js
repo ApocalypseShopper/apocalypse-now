@@ -43,7 +43,7 @@ export const fetchSingleProduct = (productId) => {
 
 export const postProduct = (product) => {
     return dispatch => {
-        axios.post('api/products', product)
+        axios.post('/api/products', product)
         .then(res => res.data)
         .then(createdProduct => {
             dispatch(createProduct(createdProduct))
@@ -61,7 +61,6 @@ export default function (state = initialState, action) {
                 allProducts: action.allProducts
             }
         }
-
         case GET_SINGLE_PRODUCT: {
             return {
               ...state,
