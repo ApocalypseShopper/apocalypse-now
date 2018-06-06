@@ -1,18 +1,21 @@
 import axios from 'axios'
 
-//Action types 
+//Action types
 
 const GET_PRODUCTS = 'GET_PRODUCTS'
+const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 
-//Initial state 
+//Initial state
 
 const initialState = {
-    allProducts: []
+    allProducts: [],
+    singleProduct: {}
 }
 
 //Action creators
 
 const getProducts = allProducts => ({type: GET_PRODUCTS, allProducts})
+const getSingleProduct = singleProduct => ({type: GET_SINGLE_PRODUCT, singleProduct})
 
 //Thunk creators
 
@@ -27,17 +30,35 @@ export const fetchProducts = () => {
     }
 }
 
+export const fetchSingleProduct = (productId) => {
+    return dispatch => {
+        axios.get(`/api/products/${productId}`)
+          .then(res => res.data)
+          .then(singleProduct => {
+            dispatch(getSingleProduct(singleProduct))
+          })
+          .catch(console.error)
+    }
+}
+
 //Reducer
 
 export default function (state = initialState, action) {
-    console.log(action)
-    switch(action.type){
+    switch (action.type){
         case GET_PRODUCTS: {
             return {
                 ...state,
                 allProducts: action.allProducts
             }
         }
+
+        case GET_SINGLE_PRODUCT: {
+            return {
+              ...state,
+              singleProduct: action.singleProduct
+            }
+        }
+
         default: {
             return state
         }
