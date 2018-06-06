@@ -1,20 +1,12 @@
 import axios from 'axios'
 
-<<<<<<< HEAD  
-//Action types 
-=======
 //Action types
 
->>>>>>> cf7c29e4195260420e4ff714bb3efe7f8b0d44ef
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 
-<<<<<<< HEAD
-//Initial state 
-=======
 //Initial state
 
->>>>>>> cf7c29e4195260420e4ff714bb3efe7f8b0d44ef
 const initialState = {
     allProducts: [],
     singleProduct: {}
