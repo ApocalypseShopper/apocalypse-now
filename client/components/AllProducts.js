@@ -9,22 +9,43 @@ import { fetchProducts } from '../store/product'
 class AllProducts extends React.Component {
   constructor(props){
     super(props)
+    this.state = {
+      catInput : '',
+      catList : [],
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange (event) {
+    const name = event.target.name
+    const value = event.target.value
+    const filter = name === 'catInput' ? value.split(' ') : this.state.catList
+
+    this.setState({
+      [name] : value,
+      catList : filter,
+    })
   }
 
   componentDidMount(){
     this.props.fetchProductsList()
+  
   }
 
   render(){
+    const selectedCategory = this.state.catList
     const products = this.props.products || []
+    const filteredProducts = products.filter(product => product.category.some(cat => selectedCategory.indexOf(cat) > -1) )
+    const displayProducts = filteredProducts.length ? filteredProducts : products 
     return (
       <div>
+        <input name='catInput' onChange={this.handleChange}/>
         <ul>
           {
-            products.map(product => {
+            displayProducts.map(product => {
               return (
                 <li key={product.id}>
-                  <h3>{product.name} costs {product.price} and we have {product.quantity} on stock</h3>
+                  <h3>categories: {product.category.join(' ')}  name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
                 </li>
               )
             })
