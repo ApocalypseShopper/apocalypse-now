@@ -17,6 +17,21 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+router.put('/:productId', (req, res, next) => {
+    Product.update({ 
+        ...req.body
+    }, {
+        where: {id: req.params.productId},
+        returning: true,
+        plain: true
+    })
+    .then(updatedProduct => {
+        if(updatedProduct) res.send(updatedProduct)
+        else res.sendStatus(404)
+    })
+    .catch(next)
+})
+
 router.get('/:productId', (req, res, next) => {
     Product.findById(Number(req.params.productId))
     .then(foundProduct => {
