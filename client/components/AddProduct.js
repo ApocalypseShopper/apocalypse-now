@@ -28,8 +28,7 @@ class AddProduct extends Component {
 
     handleSubmit(event){
         event.preventDefault()
-        let category = this.state.category ? this.state.category.split(' ') : null
-        this.props.addProduct({...this.state, category})
+        this.props.addProduct({...this.state})
     }
 
     render(){

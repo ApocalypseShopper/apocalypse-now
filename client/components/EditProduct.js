@@ -32,7 +32,6 @@ class AddProduct extends Component {
 
     handleSubmit(event){
         event.preventDefault()
-        let category = this.state.category ? this.state.category.split(' ') : null
         const stateProd = this.state
         const currentProd = this.props.product
 
@@ -42,7 +41,7 @@ class AddProduct extends Component {
             price: stateProd.price || currentProd.price,
             quantity: stateProd.quantity || currentProd.quantity,
             imageUrl: stateProd.imageUrl || currentProd.imageUrl,
-            category: category || currentProd.category
+            category: stateProd.category || currentProd.category.join(' ')
         }
 
         this.props.updateProduct(currentProd.id, updatedProduct)
