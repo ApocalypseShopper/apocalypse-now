@@ -47,3 +47,5 @@ const Product = db.define('product', {
 });
 
 module.exports = Product;
+
+//New branch to test
