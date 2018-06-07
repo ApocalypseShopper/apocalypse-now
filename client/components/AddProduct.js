@@ -28,7 +28,13 @@ class AddProduct extends Component {
 
     handleSubmit(event){
         event.preventDefault()
-        this.props.addProduct({...this.state})
+
+        const product = {
+            ...this.state,
+            imageUrl: this.state.imageUrl ? this.state.imageUrl : undefined,
+            category: this.state.category ? this.state.category : undefined
+        }
+        this.props.addProduct(product)
     }
 
     render(){
