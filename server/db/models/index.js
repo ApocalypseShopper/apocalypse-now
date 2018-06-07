@@ -17,8 +17,8 @@ const Category = require('./category')
  * instead of: const User = require('../db/models/user')
  */
 
-Category.belongsToMany(Product, {through: 'Product-Category'})
-Product.belongsToMany(Category, {through: 'Product-Category'})
+Category.belongsToMany(Product, {through: 'productCategory'})
+Product.belongsToMany(Category, {through: 'productCategory'})
 Order.belongsToMany(Product, {through: OrderItem})
 Product.belongsToMany(Order, {through: OrderItem})
 
