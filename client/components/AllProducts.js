@@ -45,7 +45,7 @@ class AllProducts extends React.Component {
     const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products 
     
     const nameFilteredProducts = firstFilter.length ? firstFilter.filter(product => product.title.split(' ').some(prod => selectedName.indexOf(prod) > -1) ) : []
-    const displayProducts = nameFilteredProducts.length ? nameFilteredProducts : products
+    const displayProducts = nameFilteredProducts.length ? nameFilteredProducts : categoryFilteredProducts
     return (
       <div>
         <input name='catInput' onChange={this.handleChange}/>
