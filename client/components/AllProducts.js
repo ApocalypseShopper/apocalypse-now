@@ -40,12 +40,14 @@ class AllProducts extends React.Component {
     const selectedName = this.state.nameList
 
     const products = this.props.products || []
-
+    console.log('products', products)
     const categoryFilteredProducts = products.filter(product => product.category.some(cat => selectedCategory.indexOf(cat) > -1) )
     const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products 
-    
+    console.log('fist filter',firstFilter)
     const nameFilteredProducts = firstFilter.length ? firstFilter.filter(product => product.title.split(' ').some(prod => selectedName.indexOf(prod) > -1) ) : []
-    const displayProducts = nameFilteredProducts.length ? nameFilteredProducts : categoryFilteredProducts
+    console.log('name filter', nameFilteredProducts)
+    const displayProducts = nameFilteredProducts.length ? nameFilteredProducts : firstFilter
+
     return (
       <div>
         <input name='catInput' onChange={this.handleChange}/>
