@@ -8,18 +8,19 @@ router.get('/', (req, res, next) => {
     })
     .catch(next)
 })
+
 router.get('/:orderId', (req, res, next) => {
-    Order.findById(Number(req.params.orderId))
-      .then(order => {
-        res.send(order)
-      })
-      .catch(next)
-  })
+  Order.findById(Number(req.params.orderId))
+    .then(order => {
+      res.send(order)
+    })
+    .catch(next)
+})
 
 router.post('/', (req, res, next) => {
-    Order.create(req.body)
+  Order.create(req.body)
     .then(createdOrder => {
-        res.status(201).send(createdOrder);
+      res.status(201).send(createdOrder);
     })
     .catch(next)
 })
