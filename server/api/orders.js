@@ -10,11 +10,16 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:orderId', (req, res, next) => {
-  Order.findById(Number(req.params.orderId))
-    .then(order => {
-      res.send(order)
-    })
-    .catch(next)
+  Order.findOne({
+    where: {
+      id: Number(req.params.orderId)
+    },
+    include: [{all: true}]
+  })
+  .then(order => {
+    res.send(order)
+  })
+  .catch(next)
 })
 
 router.post('/', (req, res, next) => {
