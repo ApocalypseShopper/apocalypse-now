@@ -7,4 +7,5 @@ module.exports = async () => {
     })
 
     await Promise.all(products)
+    console.log("!!!!!!!!!!!!SEEDED!!!!!!!!!!")
 }

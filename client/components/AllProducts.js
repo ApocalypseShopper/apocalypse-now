@@ -11,7 +11,9 @@ class AllProducts extends React.Component {
     super(props)
     this.state = {
       catInput : '',
+      nameInput: '',
       catList : [],
+      nameList : []
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -20,26 +22,36 @@ class AllProducts extends React.Component {
     const name = event.target.name
     const value = event.target.value
     const filter = name === 'catInput' ? value.split(' ') : this.state.catList
+    const filterName = name === 'nameInput' ? value.split(' ') : this.state.nameList
 
     this.setState({
       [name] : value,
       catList : filter,
+      nameList: filterName
     })
   }
 
   componentDidMount(){
     this.props.fetchProductsList()
-  
   }
 
   render(){
     const selectedCategory = this.state.catList
+    const selectedName = this.state.nameList
+
     const products = this.props.products || []
-    const filteredProducts = products.filter(product => product.category.some(cat => selectedCategory.indexOf(cat) > -1) )
-    const displayProducts = filteredProducts.length ? filteredProducts : products 
+    console.log('products', products)
+    const categoryFilteredProducts = products.filter(product => product.category.some(cat => selectedCategory.indexOf(cat) > -1) )
+    const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products 
+    console.log('fist filter',firstFilter)
+    const nameFilteredProducts = firstFilter.length ? firstFilter.filter(product => product.title.split(' ').some(prod => selectedName.indexOf(prod) > -1) ) : []
+    console.log('name filter', nameFilteredProducts)
+    const displayProducts = nameFilteredProducts.length ? nameFilteredProducts : firstFilter
+
     return (
       <div>
         <input name='catInput' onChange={this.handleChange}/>
+        <input name='nameInput' onChange={this.handleChange}/>
         <ul>
           {
             displayProducts.map(product => {
