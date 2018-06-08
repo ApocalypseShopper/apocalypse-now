@@ -38,8 +38,19 @@ router.put('/:orderId/products', (req, res, next) => {
   .then(order => {
     return order.addProduct(req.body.id, {through: {quantity: req.body.quantity, fixedPrice: req.body.fixedPrice}})
   })
-  .then(thing => {
-    res.send(thing)
+  .then(addedProduct => {
+    res.send(addedProduct)
+  })
+  .catch(next)
+})
+
+router.delete('/:orderId/products', (req, res, next) => {
+  Order.findById(req.params.orderId)
+  .then(order => {
+    return order.removeProduct(req.body.id)
+  })
+  .then(() => {
+    res.sendStatus(200)
   })
   .catch(next)
 })
