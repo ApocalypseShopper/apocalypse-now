@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order} = require('../db/models')
+const {Order,Product,OrderItem} = require('../db/models')
 
 router.get('/', (req, res, next) => {
   Order.findAll({include: [{all: true}]})
@@ -33,6 +33,17 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+router.put('/:orderId/products', (req, res, next) => {
+  Order.findById(req.params.orderId)
+  .then(order => {
+    return order.addProduct(req.body.id, {through: {quantity: req.body.quantity, fixedPrice: req.body.fixedPrice}})
+  })
+  .then(thing => {
+    res.send(thing)
+  })
+  .catch(next)
+})
+
 router.put('/:orderId', (req, res, next) => {
   Order.update({
       ...req.body
@@ -49,5 +60,6 @@ router.put('/:orderId', (req, res, next) => {
     })
     .catch(next)
 })
+
 
 module.exports = router

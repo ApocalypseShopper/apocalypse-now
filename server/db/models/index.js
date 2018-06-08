@@ -19,6 +19,7 @@ const Category = require('./category')
 
 Category.belongsToMany(Product, {through: 'productCategory'})
 Product.belongsToMany(Category, {through: 'productCategory'})
+
 Order.belongsToMany(Product, {through: OrderItem})
 Product.belongsToMany(Order, {through: OrderItem})
 
