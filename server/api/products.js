@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { Product, Category } = require('../db/models')
 
 router.get('/', (req, res, next) => {
-    Product.findAll({include: [{model: Category}]})
+    Product.findAll({ include: [{ model: Category }] })
         .then(allProducts => {
             res.send(allProducts)
         })
@@ -20,12 +20,12 @@ router.post('/', (req, res, next) => {
                     where: {
                         name: cat
                     },
-                    defaults: {name: cat}
+                    defaults: { name: cat }
                 })
             }))
         })
         .then(categories => {
-            const mappedCategories = categories.map(cat => cat[0 ].id)
+            const mappedCategories = categories.map(cat => cat[0].id)
             return newProduct.addCategories(mappedCategories)
         })
         .then(() => {
@@ -56,13 +56,5 @@ router.get('/:productId', (req, res, next) => {
         })
         .catch(next)
 })
-
-// router.post('/add', (req, res, next) => {
-//         Product.addCategories(req.body.categories)
-//         .then(addedCategory => {
-//             res.send(addedCategory)
-//         })
-//         .catch(next)
-// })
 
 module.exports = router
