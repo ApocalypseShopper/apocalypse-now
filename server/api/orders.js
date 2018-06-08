@@ -2,7 +2,7 @@ const router = require('express').Router()
 const {Order} = require('../db/models')
 
 router.get('/', (req, res, next) => {
-  Order.findAll({})
+  Order.findAll({include: [{all: true}]})
     .then(allOrders => {
       res.send(allOrders)
     })
@@ -23,9 +23,12 @@ router.get('/:orderId', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  Order.create(req.body)
+  Order.findOrCreate({
+    where:{status: 'pending'},
+    defaults: req.body
+  })
     .then(createdOrder => {
-      res.status(201).send(createdOrder);
+      res.status(201).send(createdOrder[0]);
     })
     .catch(next)
 })

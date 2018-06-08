@@ -3,41 +3,41 @@ const { Product } = require('../db/models')
 
 router.get('/', (req, res, next) => {
     Product.findAll({})
-    .then(allProducts => {
-        res.send(allProducts)
-    })
-    .catch(next)
+        .then(allProducts => {
+            res.send(allProducts)
+        })
+        .catch(next)
 })
 
 router.post('/', (req, res, next) => {
     Product.create(req.body)
-    .then(createdProduct => {
-        res.status(201).send(createdProduct);
-    })
-    .catch(next)
+        .then(createdProduct => {
+            res.status(201).send(createdProduct);
+        })
+        .catch(next)
 })
 
 router.put('/:productId', (req, res, next) => {
-    Product.update({ 
+    Product.update({
         ...req.body
     }, {
-        where: {id: req.params.productId},
-        returning: true,
-        plain: true
-    })
-    .then(updatedProduct => {
-        if(updatedProduct) res.send(updatedProduct)
-        else res.sendStatus(404)
-    })
-    .catch(next)
+            where: { id: req.params.productId },
+            returning: true,
+            plain: true
+        })
+        .then(updatedProduct => {
+            if (updatedProduct) res.send(updatedProduct)
+            else res.sendStatus(404)
+        })
+        .catch(next)
 })
 
 router.get('/:productId', (req, res, next) => {
     Product.findById(Number(req.params.productId))
-    .then(foundProduct => {
-        res.send(foundProduct)
-    })
-    .catch(next)
+        .then(foundProduct => {
+            res.send(foundProduct)
+        })
+        .catch(next)
 })
 
-module.exports = router;
+module.exports = router
