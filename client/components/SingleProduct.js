@@ -17,14 +17,20 @@ class SingleProduct extends Component {
   }
 
   render() {
-    console.log(this.props.singleProduct)
     const singleProduct = this.props.singleProduct
     return (
       <div>
         <h2>{singleProduct.title}</h2>
         <img src={singleProduct.imageUrl} />
-        <p>{singleProduct.description}</p>
-        <p>{singleProduct.price}</p>
+        <p>{`Description: ${singleProduct.description}`}</p>
+        <p>{`Category`}</p>
+        <ul>
+          {singleProduct.categories &&
+              singleProduct.categories.map(category => {
+                return <li key={category.id}>{category.name}</li>
+              })}
+        </ul>
+        <p>{`Price: $${singleProduct.price}`}</p>
         <p>{`There are ${singleProduct.quantity} in the inventory`}</p>
       </div>
     );
