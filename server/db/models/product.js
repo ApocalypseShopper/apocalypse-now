@@ -1,4 +1,6 @@
 const Sequelize = require('sequelize')
+const { Op } = Sequelize
+const Category = require('./category')
 const db = require('../db')
 
 const Product = db.define('product', {
@@ -38,6 +40,19 @@ const Product = db.define('product', {
     }
 });
 
-
+Product.prototype.updateCategories = function(categories, product) {
+    return Product.findById(
+        product.id,
+        { include: [{ model: Category }] }
+    )
+    .then(foundProduct => {
+        const prodCategories = foundProduct.categories.map(category => category.id)
+        const uniqueProdCategory = prodCategories.filter(category => !categories.includes(category))
+        const uniqueCategory = categories.filter(category => !prodCategories.includes(category))
+        foundProduct.removeCategories(uniqueProdCategory)
+        foundProduct.addCategories(uniqueCategory)
+    })
+    .catch(console.error)
+  }
 
 module.exports = Product;
