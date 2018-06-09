@@ -1,7 +1,7 @@
 {
     "name": "apocalypse-now",
     "description": "When the dawn of humanity creeps in the shadow of the valley of death, we got your supplies!",
-    "repository": "git.heroku.com/lit-peak-88710.git",
+    "repository": "https://git.heroku.com/apocalypse-now.git",
     "logo": "https://selfpublishingadvice.org/wp-content/uploads/2014/07/Apocalypse-sign.jpg",
     "keywords": [
         "node",
