@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Product } = require('../db/models')
+const { Product, Category } = require('../db/models')
 
 router.get('/', (req, res, next) => {
     Product.findAll({})
@@ -33,7 +33,12 @@ router.put('/:productId', (req, res, next) => {
 })
 
 router.get('/:productId', (req, res, next) => {
-    Product.findById(Number(req.params.productId))
+    Product.findOne({
+        where: {
+          id: Number(req.params.productId)
+        },
+        include: [{model: Category}]
+      })
         .then(foundProduct => {
             res.send(foundProduct)
         })
