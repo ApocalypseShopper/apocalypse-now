@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize')
-const { Op } = Sequelize
 const Category = require('./category')
 const db = require('../db')
 
