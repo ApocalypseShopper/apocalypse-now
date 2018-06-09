@@ -1,0 +1,12 @@
+{
+    "name": "apocalypse-now",
+    "description": "When the dawn of humanity creeps in the shadow of the valley of death, we got your supplies!",
+    "repository": "git.heroku.com/lit-peak-88710.git",
+    "logo": "https://selfpublishingadvice.org/wp-content/uploads/2014/07/Apocalypse-sign.jpg",
+    "keywords": [
+        "node",
+        "heroku",
+        "express"
+      ],
+      "image": "https://vignette.wikia.nocookie.net/buddyfightfanon/images/3/38/Post-apocalyptic-city_380115.jpg/revision/latest/scale-to-width-down/640?cb=20140929234520"
+}
