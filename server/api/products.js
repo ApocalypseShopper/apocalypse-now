@@ -32,6 +32,7 @@ router.put('/:productId', (req, res, next) => {
         .catch(next)
 })
 
+
 router.get('/:productId', (req, res, next) => {
     Product.findOne({
         where: {
