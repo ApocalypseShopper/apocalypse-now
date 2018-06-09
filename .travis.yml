@@ -25,4 +25,4 @@ deploy:
   provider: heroku
   app: apocalypse-now # see README
   api_key:
-    secure: 08e8d775-8b1d-44f0-b5f0-1f2d627247b0 # see README
+    secure: 0500afca-b302-4b6d-b6f7-249ef438b9ea # see README
