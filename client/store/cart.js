@@ -51,7 +51,7 @@ export const deleteFromCart = (orderId, product) => {
   return dispatch => {
       axios.delete(`/api/orders/${orderId}/products`, product)
       .then(res => res.data)
-      .then((() => {
+      .then(() => {
           dispatch(deleteProduct(product))
       })
       .catch(console.error)
