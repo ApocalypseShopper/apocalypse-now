@@ -70,5 +70,14 @@
     "supertest": "^3.0.0",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ApocalypseShopper/apocalypse-now.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ]
 }
