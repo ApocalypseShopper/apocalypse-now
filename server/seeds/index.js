@@ -1,8 +1,9 @@
-const {Product,Category} = require('../db/models')
-const seed = require('./productsSeed')
+const {Product,Category,User,Order} = require('../db/models')
+const productSeed = require('./productsSeed')
+const userSeed = require('./usersSeed')
 
 module.exports = async () => {
-    let products = seed.map(async product => {
+    let products = productSeed.map(async product => {
         const productCreated = await Product.create({
             title: product.title,
             description: product.description,
@@ -32,6 +33,16 @@ module.exports = async () => {
         await productCreated.addCategories(mappedCategories)  
     })
 
-    await Promise.all(products)
-    
+    const orderTypes = ['pending','purchased','shipped']
+
+    userSeed.map(async (user,index) => {
+        const userCreated = await User.create(user)
+
+        const type = (index % 3)
+        const orderType = orderTypes[type]
+        const orderCreated = await Order.create({status: orderType, userId: userCreated.id})
+        for(let i = 0; i < 5; i++){
+            orderCreated.addProduct(Math.floor(Math.random() * 1000), {through: {quantity: 10, fixedPrice: Math.floor(Math.random() * 100)}})
+        }
+    })
 }
