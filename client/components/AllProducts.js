@@ -41,7 +41,7 @@ class AllProducts extends React.Component {
 
     const products = this.props.products || []
     console.log('products', products)
-    const categoryFilteredProducts = products.filter(product => product.category.some(cat => selectedCategory.indexOf(cat) > -1) )
+    const categoryFilteredProducts = products.filter(product => product.categories.map(cat => cat.name).some(cat => selectedCategory.indexOf(cat) > -1) )
     const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products 
     console.log('fist filter',firstFilter)
     const nameFilteredProducts = firstFilter.length ? firstFilter.filter(product => product.title.split(' ').some(prod => selectedName.indexOf(prod) > -1) ) : []
@@ -57,7 +57,8 @@ class AllProducts extends React.Component {
             displayProducts.map(product => {
               return (
                 <li key={product.id}>
-                  <h3>categories: {product.category.join(' ')}  name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
+                  <h3>categories: {`"${product.categories.map(cat => cat.name).join(' ')}"`}  name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
+                  <button>Add to Cart</button>
                 </li>
               )
             })
