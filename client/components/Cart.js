@@ -30,22 +30,15 @@ class Cart extends React.Component {
     if(true) {
       this.props.loadCart(userId)
     } else {
-      console.log('heyyyyyyy')
       let currCart = JSON.parse(localStorage.getItem('cart')) || {}
-      console.log('***************',currCart[product.id])
       currCart[product.id] ? currCart[product.id] += 1 : currCart[product.id] = 1
-      console.log(currCart)
       localStorage.setItem('cart', JSON.stringify(currCart))
     }
   }
 
-  // handleClick(event, product) {
-  //   this.props.deleteProduct(orderId, product)
-  // }
-
   render(){
-    const products = this.props.cart[0] || []
-    console.log('cart++++', Object.keys(products))
+    const products = this.props.products
+
     return (
       <div>
         <ul>
@@ -70,7 +63,7 @@ class Cart extends React.Component {
  */
 const mapState = (state) => {
   return {
-    cart: state.cart.cart
+    products: state.cart.products
   }
 }
 

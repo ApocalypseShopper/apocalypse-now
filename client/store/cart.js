@@ -4,10 +4,10 @@ const GET_CART = 'GET_CART';
 const ADD_TO_CART = 'ADD_TO_CART';
 const DELETE_PRODUCT = 'DELETE_PRODUCT';
 // Action Creator
-export const getCart = cartProducts => {
+export const getCart = cart => {
    return {
     type: GET_CART,
-    cartProducts
+    cart
    }
 }
 export const addToCart = product => {
@@ -24,7 +24,7 @@ export const deleteProduct = product => {
 }
 // Initial State
 const initialState = {
-    cart: [],
+    products: []
 }
 // Thunks
 export const fetchCart = (userId) => {
@@ -61,15 +61,9 @@ export const deleteFromCart = (orderId, product) => {
 export default function (state = initialState, action) {
     switch(action.type) {
         case GET_CART:
-            return {
-                ...state,
-                cart : [...state.cart, action.cartProducts]
-            }
+            return {...state, products: action.cart.products}
         case ADD_TO_CART:
-            return {
-                ...state,
-                cart: [...state.cart, action.product]
-            }
+            return {...state, products: [...state.products, action.product]}
         // case DELETE_PRODUCT:
         //     if(state.cart.cart.products !== [])
         //       return {

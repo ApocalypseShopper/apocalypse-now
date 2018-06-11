@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:userId', (req, res, next) => {
-  Order.findOne({
+  Order.findOrCreate({
     where: {
       userId: Number(req.params.userId),
       status: 'pending'
@@ -18,7 +18,7 @@ router.get('/:userId', (req, res, next) => {
     include: [{all: true}]
   })
   .then(order => {
-    res.send(order)
+    res.send(order[0])
   })
   .catch(next)
 })

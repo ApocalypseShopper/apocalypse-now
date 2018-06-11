@@ -23,8 +23,9 @@ class AllProducts extends React.Component {
   }
 
   handleClick (product) {
-      if(false) {
-        //this.props.addProduct(userId, product)
+      if(true) {
+        console.log('HHHHHHHHH', product)
+        this.props.addProduct(userId, product)
       } else {
         console.log('heyyyyyyy')
         let currCart = JSON.parse(localStorage.getItem('cart')) || {}
@@ -94,7 +95,7 @@ class AllProducts extends React.Component {
 const mapState = (state) => {
   return {
     products: state.products.allProducts,
-    cart: state.cart.cart
+    cart: state.cart
   }
 }
 
