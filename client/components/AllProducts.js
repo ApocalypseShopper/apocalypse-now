@@ -23,11 +23,14 @@ class AllProducts extends React.Component {
   }
 
   handleClick (product) {
-      if(true) {
-        this.props.addProduct(userId, product)
+      if(false) {
+        //this.props.addProduct(userId, product)
       } else {
+        console.log('heyyyyyyy')
         let currCart = JSON.parse(localStorage.getItem('cart')) || {}
-        currCart[product.id] ? currCart[product.id] = 1 : currCart[product.id] += 1
+        console.log('***************',currCart[product.id])
+        currCart[product.id] ? currCart[product.id] += 1 : currCart[product.id] = 1
+        console.log(currCart)
         localStorage.setItem('cart', JSON.stringify(currCart))
       }
   }
