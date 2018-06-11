@@ -18,6 +18,7 @@ class SingleProduct extends Component {
 
   render() {
     const singleProduct = this.props.singleProduct
+    console.log(singleProduct)
     return (
       <div>
         <h2>{singleProduct.title}</h2>
