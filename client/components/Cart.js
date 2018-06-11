@@ -19,35 +19,42 @@ import { getCart, fetchCart, postToCart, deleteFromCart } from '../store/cart'
 //      {id: 50,title: 'Can\'t wait to sleep', description: 'awesome', price: 40, quantity: 34 },
 //  ]
 
-const orderId = 2;  //hardCoded orderId
+const userId = 101;  //hardCoded orderId
 
 class Cart extends React.Component {
   constructor(props){
     super(props)
-    this.handleClick = this.handleClick.bind(this)
   }
 
   componentDidMount(){
-    userId && this.props.loadCart()
+    if(true) {
+      this.props.loadCart(userId)
+    } else {
+      console.log('heyyyyyyy')
+      let currCart = JSON.parse(localStorage.getItem('cart')) || {}
+      console.log('***************',currCart[product.id])
+      currCart[product.id] ? currCart[product.id] += 1 : currCart[product.id] = 1
+      console.log(currCart)
+      localStorage.setItem('cart', JSON.stringify(currCart))
+    }
   }
 
   // handleClick(event, product) {
-  //   event.preventDefault()
   //   this.props.deleteProduct(orderId, product)
   // }
 
   render(){
-    const products = this.props.cart.products
-    // console.log('cart++++', this.state)
+    const products = this.props.cart[0] || []
+    console.log('cart++++', Object.keys(products))
     return (
       <div>
         <ul>
-          { products &&
+          {
               products.map(product => {
                 return (
                   <li key={product.id}>
                     <h3> name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
-                    {/*<button type="button" onClick={(event, product) => this.handleClick(event, product)}>{`Delete`}</button> */}
+                    {/*<button type="button" onClick={() => this.handleClick(product)}>{`Delete`}</button> */}
                   </li>
                 )
               })
@@ -69,8 +76,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-      loadCart: () => {
-        dispatch(fetchCart(orderId))
+      loadCart: (userId) => {
+        dispatch(fetchCart(userId))
       },
       deleteProduct: (product) => {
         dispatch(deleteFromCart(orderId, product))
