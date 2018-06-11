@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
 router.get('/:userId', (req, res, next) => {
   Order.findAll({
     where: {
-      id: Number(req.params.userId),
+      userId: Number(req.params.userId),
       status: 'pending'
     },
     include: [{all: true}]
