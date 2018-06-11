@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { fetchProducts } from '../store/product'
+import { Button } from 'antd';
 
 /**
  * COMPONENT
@@ -40,12 +41,9 @@ class AllProducts extends React.Component {
     const selectedName = this.state.nameList
 
     const products = this.props.products || []
-    console.log('products', products)
     const categoryFilteredProducts = products.filter(product => product.categories.map(cat => cat.name).some(cat => selectedCategory.indexOf(cat) > -1) )
     const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products 
-    console.log('fist filter',firstFilter)
     const nameFilteredProducts = firstFilter.length ? firstFilter.filter(product => product.title.split(' ').some(prod => selectedName.indexOf(prod) > -1) ) : []
-    console.log('name filter', nameFilteredProducts)
     const displayProducts = nameFilteredProducts.length ? nameFilteredProducts : firstFilter
 
     return (
@@ -58,7 +56,7 @@ class AllProducts extends React.Component {
               return (
                 <li key={product.id}>
                   <h3>categories: {`"${product.categories.map(cat => cat.name).join(' ')}"`}  name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
-                  <button>Add to Cart</button>
+                  <Button>Add to Cart</Button>
                 </li>
               )
             })
