@@ -9,6 +9,20 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/:userId', (req, res, next) => {
+  Order.findAll({
+    where: {
+      id: Number(req.params.userId),
+      status: 'pending'
+    },
+    include: [{all: true}]
+  })
+  .then(order => {
+    res.send(order)
+  })
+  .catch(next)
+})
+
 router.get('/:orderId', (req, res, next) => {
   Order.findOne({
     where: {

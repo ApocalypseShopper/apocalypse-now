@@ -27,9 +27,9 @@ const initialState = {
     cart: {},
 }
 // Thunks
-export const fetchCart = (orderId) => {
+export const fetchCart = (userId) => {
     return dispatch => {
-        axios.get(`/api/orders/${orderId}`)
+        axios.get(`/api/orders/${userId}`)
             .then(res => res.data)
             .then(currCart => {
                 dispatch(getCart(currCart))
