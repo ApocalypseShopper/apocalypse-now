@@ -25,11 +25,9 @@ module.exports = async () => {
         let mappedCategories = cats.map(cat => {
             return cat[0].id
         })
-        console.log(mappedCategories)
         mappedCategories = mappedCategories.filter((catId,idx) => {
             return mappedCategories.indexOf(catId) === idx
         })
-        console.log(mappedCategories)
         await productCreated.addCategories(mappedCategories)  
     })
 
