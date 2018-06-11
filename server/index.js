@@ -94,7 +94,7 @@ const startListening = () => {
   require('./socket')(io)
 }
 
-const syncDb = () => db.sync()
+const syncDb = () => db.sync({force: true})
 
 // This evaluates as true when this file is run directly from the command line,
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
@@ -103,7 +103,7 @@ const syncDb = () => db.sync()
 if (require.main === module) {
   sessionStore.sync()
     .then(syncDb)
-    // .then(seed)
+    .then(seed)
     .then(createApp)
     .then(startListening)
 } else {
