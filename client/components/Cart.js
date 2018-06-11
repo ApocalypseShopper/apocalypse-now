@@ -28,7 +28,7 @@ class Cart extends React.Component {
   }
 
   componentDidMount(){
-    orderId && this.props.loadCart()
+    userId && this.props.loadCart()
   }
 
   // handleClick(event, product) {

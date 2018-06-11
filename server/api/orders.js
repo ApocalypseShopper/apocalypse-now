@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:userId', (req, res, next) => {
-  Order.findAll({
+  Order.findOne({
     where: {
       userId: Number(req.params.userId),
       status: 'pending'
@@ -47,8 +47,14 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
-router.put('/:orderId/products', (req, res, next) => {
-  Order.findById(req.params.orderId)
+router.put('/:userId/products', (req, res, next) => {
+  Order.findOne({
+    where: {
+      userId: Number(req.params.userId),
+      status: 'pending'
+    },
+    include: [{all: true}]
+  })
   .then(order => {
     return order.addProduct(req.body.id, {through: {quantity: req.body.quantity, fixedPrice: req.body.fixedPrice}})
   })

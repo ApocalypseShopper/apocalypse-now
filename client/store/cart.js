@@ -10,13 +10,13 @@ export const getCart = cartProducts => {
     cartProducts
    }
 }
-const addToCart = product => {
+export const addToCart = product => {
     return {
         type: ADD_TO_CART,
         product
        }
 }
-const deleteProduct = product => {
+export const deleteProduct = product => {
   return {
     type: DELETE_PRODUCT,
     product
@@ -24,7 +24,7 @@ const deleteProduct = product => {
 }
 // Initial State
 const initialState = {
-    cart: {},
+    cart: [],
 }
 // Thunks
 export const fetchCart = (userId) => {
@@ -37,9 +37,9 @@ export const fetchCart = (userId) => {
             .catch(console.error)
     }
 }
-export const postToCart = (orderId, product) => {
+export const postToCart = (userId, product) => {
     return dispatch => {
-        axios.put(`/api/orders/${orderId}/products`, product)
+        axios.put(`/api/orders/${userId}/products`, product)
         .then(res => res.data)
         .then(postedProduct => {
             dispatch(addToCart(postedProduct))
@@ -63,7 +63,7 @@ export default function (state = initialState, action) {
         case GET_CART:
             return {
                 ...state,
-                cart : action.cartProducts
+                cart : [...state.cart, action.cartProducts]
             }
         case ADD_TO_CART:
             return {
