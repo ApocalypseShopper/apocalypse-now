@@ -4,29 +4,55 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div>
-    <h1>BOILERMAKER</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)
+import { Menu, Icon } from 'antd';
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
+class Navbar extends React.Component{
+  constructor(){
+    super()
+    this.state = {
+      current: 'mail'
+    }
+  }
+
+  render(){
+    const {handleClick, isLoggedIn} = this.props
+    return (
+      <div>
+        {/* <h1>BOILERMAKER</h1>
+        <nav>
+          {isLoggedIn ? (
+            <div>
+              <Link to="/home">Home</Link>
+              <a href="#" onClick={handleClick}>
+                Logout
+              </a>
+            </div>
+          ) : (
+            <div>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Sign Up</Link>
+            </div>
+          )}
+        </nav>
+        <hr /> */}
+        <Menu
+        onClick={this.handleClick}
+        selectedKeys={[this.state.current]}
+        mode="horizontal"
+      >
+          <Menu.Item key="mail">
+            <Icon type="mail" />Home
+          </Menu.Item>
+          <Menu.Item key="app" disabled>
+            <Icon type="appstore" />Log Out
+          </Menu.Item>
+        </Menu>
+      </div>
+    )
+  }
+} 
 
 /**
  * CONTAINER
