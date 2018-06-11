@@ -1,28 +1,35 @@
 import axios from 'axios'
 //Action Type
 const GET_CART = 'GET_CART';
-const ADD_TO_CART = 'ADD_TO_CART'
+const ADD_TO_CART = 'ADD_TO_CART';
+const DELETE_PRODUCT = 'DELETE_PRODUCT';
 // Action Creator
 export const getCart = cartProducts => {
    return {
     type: GET_CART,
-    cartProducts,
-   } 
-} 
+    cartProducts
+   }
+}
 const addToCart = product => {
     return {
         type: ADD_TO_CART,
-        product,
-       } 
+        product
+       }
+}
+const deleteProduct = product => {
+  return {
+    type: DELETE_PRODUCT,
+    product
+  }
 }
 // Initial State
 const initialState = {
-    cart: [],
+    cart: {},
 }
 // Thunks
-export const fetchCart = () => {
+export const fetchCart = (orderId) => {
     return dispatch => {
-        axios.get('/api/cart')
+        axios.get(`/api/orders/${orderId}`)
             .then(res => res.data)
             .then(currCart => {
                 dispatch(getCart(currCart))
@@ -30,9 +37,9 @@ export const fetchCart = () => {
             .catch(console.error)
     }
 }
-export const postToCart = (product) => {
+export const postToCart = (orderId, product) => {
     return dispatch => {
-        axios.post('/api/cart', product)
+        axios.put(`/api/orders/${orderId}/products`, product)
         .then(res => res.data)
         .then(postedProduct => {
             dispatch(addToCart(postedProduct))
@@ -40,19 +47,40 @@ export const postToCart = (product) => {
         .catch(console.error)
     }
 }
+export const deleteFromCart = (orderId, product) => {
+  return dispatch => {
+      axios.delete(`/api/orders/${orderId}/products`, product)
+      .then(res => res.data)
+      // .then(() => {
+      //     dispatch(deleteProduct(product))
+      // })
+      .catch(console.error)
+  }
+}
 // Reducer
 export default function (state = initialState, action) {
     switch(action.type) {
         case GET_CART:
             return {
-                ...state, 
+                ...state,
                 cart : action.cartProducts
             }
         case ADD_TO_CART:
             return {
-                ...state, 
+                ...state,
                 cart: [...state.cart, action.product]
             }
+        // case DELETE_PRODUCT:
+        //     if(state.cart.cart.products !== [])
+        //       return {
+        //           ...state,
+        //           cart: {
+        //             cart: {
+        //               ...state.cart.cart,
+        //               products: state.cart.cart.products.filter(prod => prod.id !== action.product.id)
+        //           }
+        //         }
+        //       }
         default:
             return state
     }
