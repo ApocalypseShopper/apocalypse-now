@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import { fetchProducts } from '../store/product'
 import { postToCart, addToCart } from '../store/cart'
 
+const userId = 101;
+
 /**
  * COMPONENT
  */
@@ -21,11 +23,13 @@ class AllProducts extends React.Component {
   }
 
   handleClick (product) {
-    return (event) => {
-      console.log(event)
-      console.log('*****', product)
-      this.props.addProduct(userId, product)
-    }
+      if(true) {
+        this.props.addProduct(userId, product)
+      } else {
+        let currCart = JSON.parse(localStorage.getItem('cart')) || {}
+        currCart[product.id] ? currCart[product.id] = 1 : currCart[product.id] += 1
+        localStorage.setItem('cart', JSON.stringify(currCart))
+      }
   }
 
 
@@ -70,7 +74,7 @@ class AllProducts extends React.Component {
               return (
                 <li key={product.id}>
                   <h3>categories: {`"${product.categories.map(cat => cat.name).join(' ')}"`}  name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
-                  <button onClick={this.handleClick(product)}>Add to Cart</button>
+                  <button onClick={() => this.handleClick(product)}>Add to Cart</button>
                 </li>
               )
             })

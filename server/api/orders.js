@@ -48,7 +48,7 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:userId/products', (req, res, next) => {
-  Order.findOne({
+  Order.findOrCreate({
     where: {
       userId: Number(req.params.userId),
       status: 'pending'
@@ -56,7 +56,8 @@ router.put('/:userId/products', (req, res, next) => {
     include: [{all: true}]
   })
   .then(order => {
-    return order.addProduct(req.body.id, {through: {quantity: req.body.quantity, fixedPrice: req.body.fixedPrice}})
+    console.log('******', order[0])
+    return order[0].addProduct(req.body.id, {through: {quantity: req.body.quantity, fixedPrice: req.body.fixedPrice}})
   })
   .then(addedProduct => {
     res.send(addedProduct)
