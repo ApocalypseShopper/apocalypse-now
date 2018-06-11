@@ -24,7 +24,7 @@ class AllProducts extends React.Component {
     return (event) => {
       console.log(event)
       console.log('*****', product)
-      this.props.addProduct(product)
+      this.props.addProduct(userId, product)
     }
   }
 
@@ -96,8 +96,8 @@ const mapDispatch = (dispatch) => {
     fetchProductsList: () => {
       dispatch(fetchProducts())
     },
-    addProduct: (product) => {
-      dispatch(addToCart(product))
+    addProduct: (userId, product) => {
+      dispatch(postToCart(userId, product))
     }
   }
 }
