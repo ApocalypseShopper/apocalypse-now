@@ -4,19 +4,19 @@ const GET_CART = 'GET_CART';
 const ADD_TO_CART = 'ADD_TO_CART';
 const DELETE_PRODUCT = 'DELETE_PRODUCT';
 // Action Creator
-export const getCart = cartProducts => {
+export const getCart = cart => {
    return {
     type: GET_CART,
-    cartProducts
+    cart
    }
 }
-const addToCart = product => {
+export const addToCart = product => {
     return {
         type: ADD_TO_CART,
         product
        }
 }
-const deleteProduct = product => {
+export const deleteProduct = product => {
   return {
     type: DELETE_PRODUCT,
     product
@@ -24,7 +24,7 @@ const deleteProduct = product => {
 }
 // Initial State
 const initialState = {
-    cart: {},
+    products: []
 }
 // Thunks
 export const fetchCart = (userId) => {
@@ -37,9 +37,27 @@ export const fetchCart = (userId) => {
             .catch(console.error)
     }
 }
-export const postToCart = (orderId, product) => {
+export const fetchLocalStorageCart = (localStorage) => {
     return dispatch => {
-        axios.put(`/api/orders/${orderId}/products`, product)
+        let productIds = Object.keys(localStorage).map(ele => Number(ele))
+        console.log('STORE', productIds)
+        Promise.all(productIds.map( (prodId) => {
+            return axios.get(`/api/products/${prodId}`)
+            .then(product => {
+                return product.data
+            })
+            .catch(console.error)
+        }))
+        .then(products => {
+            dispatch(getCart({products}))
+        })
+        .catch(console.error)
+    }
+}
+
+export const postToCart = (userId, product) => {
+    return dispatch => {
+        axios.put(`/api/orders/${userId}/products`, product)
         .then(res => res.data)
         .then(postedProduct => {
             dispatch(addToCart(postedProduct))
@@ -61,15 +79,9 @@ export const deleteFromCart = (orderId, product) => {
 export default function (state = initialState, action) {
     switch(action.type) {
         case GET_CART:
-            return {
-                ...state,
-                cart : action.cartProducts
-            }
+            return {...state, products: action.cart.products}
         case ADD_TO_CART:
-            return {
-                ...state,
-                cart: [...state.cart, action.product]
-            }
+            return {...state, products: [...state.products, action.product]}
         // case DELETE_PRODUCT:
         //     if(state.cart.cart.products !== [])
         //       return {

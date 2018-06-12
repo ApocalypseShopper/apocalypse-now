@@ -1,24 +1,22 @@
 import React from 'react'
 import { Card, Icon } from 'antd'
 const { Meta } = Card
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom' 
 
 const ProductCard = (props) => {
     return (
-        <Link to={`/products/${props.id}`}>
-            <Card
-                hoverable
-                style={{ width: 240 }}
-                cover={<img alt={props.name} src={props.imageUrl} />}
-                actions={[<Icon type="shopping-cart" />]}
-            >
+        <Card
+        hoverable
+        style={{ width: 240 }}
+        cover={<img alt={props.product.name} src={props.product.imageUrl} />}
+        actions={[<Icon onClick={() => {props.addToCart(props.product)}} type="shopping-cart" />,<Icon type="eye" onClick={() => props.history.push(`/products/${props.product.id}`)}/>]}
+        >
                 <Meta
-                title={props.title + ' ' + props.price}
-                description={`"${props.categories.map(cat => cat.name).join(' ')}"`}
+                title={props.product.title + ' ' + props.product.price}
+                description={`"${props.product.categories.map(cat => cat.name).join(' ')}"`}
                 />
-            </Card>
-        </Link>  
+        </Card> 
     )
 }
 
-export default ProductCard
+export default withRouter(ProductCard)
