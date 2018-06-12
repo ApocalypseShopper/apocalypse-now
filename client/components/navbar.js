@@ -1,32 +1,79 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div>
-    <h1>BOILERMAKER</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)
+import { Menu, Icon } from 'antd';
+
+class Navbar extends React.Component{
+  constructor(){
+    super()
+    this.state = {
+      current: 'products'
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentDidMount(){
+    this.setState({
+      current: this.props.location.pathname.slice(1)
+    })
+  }
+
+  handleClick = (e) => {
+    console.log('click ', e);
+    this.setState({
+      current: e.key,
+    });
+    this.props.history.push(`/${e.key}`)
+  }
+
+  render(){
+    const {isLoggedIn} = this.props
+    console.log(this.props)
+    return (
+      <div>
+        <nav>
+          {isLoggedIn ? (
+            <Menu
+              onClick={this.handleClick}
+              selectedKeys={[this.state.current]}
+              mode="horizontal"
+              theme="dark"
+            >
+              <Menu.Item key="products">
+                <Icon type="tool" />Products
+              </Menu.Item>
+              <Menu.Item key="logout">
+                <Icon type="logout" />Log Out
+              </Menu.Item>
+            </Menu>
+          ) : (
+            <Menu
+              onClick={this.handleClick}
+              selectedKeys={[this.state.current]}
+              mode="horizontal"
+              theme="dark"
+            >
+              <Menu.Item key="products">
+                <Icon type="tool" />Products
+              </Menu.Item>
+              <Menu.Item key="login">
+                <Icon type="login" />Log In
+              </Menu.Item>
+              <Menu.Item key="signup">
+                <Icon type="user-add" />Sign Up
+              </Menu.Item>
+            </Menu>
+          )}
+        </nav>
+      
+
+      </div>
+    )
+  }
+} 
 
 /**
  * CONTAINER
@@ -45,7 +92,7 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default withRouter(connect(mapState, mapDispatch)(Navbar))
 
 /**
  * PROP TYPES

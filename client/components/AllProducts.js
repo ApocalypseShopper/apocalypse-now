@@ -2,6 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { fetchProducts } from '../store/product'
+import { postToCart, addToCart } from '../store/cart'
+
+const userId = 101;
+import { Button } from 'antd';
 
 /**
  * COMPONENT
@@ -16,7 +20,19 @@ class AllProducts extends React.Component {
       nameList : []
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
+
+  handleClick (product) {
+      if(false) {
+        this.props.addProduct(userId, product)
+      } else {
+        let currCart = JSON.parse(localStorage.getItem('cart')) || {}
+        currCart[product.id] ? currCart[product.id] += 1 : currCart[product.id] = 1
+        localStorage.setItem('cart', JSON.stringify(currCart))
+      }
+  }
+
 
   handleChange (event) {
     const name = event.target.name
@@ -40,12 +56,9 @@ class AllProducts extends React.Component {
     const selectedName = this.state.nameList
 
     const products = this.props.products || []
-    console.log('products', products)
     const categoryFilteredProducts = products.filter(product => product.categories.map(cat => cat.name).some(cat => selectedCategory.indexOf(cat) > -1) )
-    const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products 
-    console.log('fist filter',firstFilter)
+    const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products
     const nameFilteredProducts = firstFilter.length ? firstFilter.filter(product => product.title.split(' ').some(prod => selectedName.indexOf(prod) > -1) ) : []
-    console.log('name filter', nameFilteredProducts)
     const displayProducts = nameFilteredProducts.length ? nameFilteredProducts : firstFilter
 
     return (
@@ -58,7 +71,7 @@ class AllProducts extends React.Component {
               return (
                 <li key={product.id}>
                   <h3>categories: {`"${product.categories.map(cat => cat.name).join(' ')}"`}  name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
-                  <button>Add to Cart</button>
+                  <button onClick={() => this.handleClick(product)}>Add to Cart</button>
                 </li>
               )
             })
@@ -74,7 +87,8 @@ class AllProducts extends React.Component {
  */
 const mapState = (state) => {
   return {
-    products: state.products.allProducts
+    products: state.products.allProducts,
+    cart: state.cart
   }
 }
 
@@ -82,6 +96,9 @@ const mapDispatch = (dispatch) => {
   return {
     fetchProductsList: () => {
       dispatch(fetchProducts())
+    },
+    addProduct: (userId, product) => {
+      dispatch(postToCart(userId, product))
     }
   }
 }

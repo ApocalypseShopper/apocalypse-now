@@ -1,9 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+<<<<<<< HEAD
 import { getCart, fetchCart, postToCart, deleteFromCart } from '../store/cart'
 import { Link } from 'react-router-dom'
 import Checkout from './Checkout'
+=======
+import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart } from '../store/cart'
+
+>>>>>>> bda60efe5de248d27496354c6aa5f3bd3f3461b5
 /**
  * COMPONENT
  */
@@ -20,35 +25,51 @@ import Checkout from './Checkout'
 //      {id: 50,title: 'Can\'t wait to sleep', description: 'awesome', price: 40, quantity: 34 },
 //  ]
 
-const orderId = 2;  //hardCoded orderId
+const userId = 101;  //hardCoded orderId
 
 class Cart extends React.Component {
   constructor(props){
     super(props)
-    this.handleClick = this.handleClick.bind(this)
+    this.state = {
+      cart: {}
+    }
   }
 
   componentDidMount(){
-    orderId && this.props.loadCart()
+    if(false) {
+      this.props.loadCart(userId)
+    } else {
+      let cart = JSON.parse(localStorage.getItem('cart'))
+      this.setState({cart})
+      this.props.localCart(cart)
+    }
   }
 
+<<<<<<< HEAD
   handleClick(amount) {
     event.preventDefault()
    Checkout(amount)
   }
 
 
+=======
+>>>>>>> bda60efe5de248d27496354c6aa5f3bd3f3461b5
   render(){
-    const products = this.props.cart.products
-    // console.log('cart++++', this.state)
+    const products = this.props.products
+
     return (
       <div>
+<<<<<<< HEAD
           { false &&
+=======
+        <ul>
+          {
+>>>>>>> bda60efe5de248d27496354c6aa5f3bd3f3461b5
               products.map(product => {
                 return (
                   <li key={product.id}>
                     <h3> name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
-                    {/*<button type="button" onClick={(event, product) => this.handleClick(event, product)}>{`Delete`}</button> */}
+                    {/*<button type="button" onClick={() => this.handleClick(product)}>{`Delete`}</button> */}
                   </li>
                 )
               })
@@ -66,14 +87,17 @@ class Cart extends React.Component {
  */
 const mapState = (state) => {
   return {
-    cart: state.cart.cart
+    products: state.cart.products
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-      loadCart: () => {
-        dispatch(fetchCart(orderId))
+      loadCart: (userId) => {
+        dispatch(fetchCart(userId))
+      },
+      localCart : (storage) => {
+        dispatch(fetchLocalStorageCart(storage))
       },
       deleteProduct: (product) => {
         dispatch(deleteFromCart(orderId, product))
