@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart } from '../store/cart'
 
 /**
@@ -22,50 +22,60 @@ import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart }
 const userId = 101;  //hardCoded orderId
 
 class Cart extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       cart: {}
     }
+    // this.handleClick = this.handleClick.bind(this)
   }
 
-  componentDidMount(){
-    if(this.props.isLoggedIn) {
+  componentDidMount() {
+    if (this.props.isLoggedIn) {
       this.props.loadCart(userId)
     } else {
       let cart = JSON.parse(localStorage.getItem('cart')) || {}
-      this.setState({cart})
+      this.setState({ cart })
       this.props.localCart(cart)
     }
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps.isLoggedIn !== this.props.isLoggedIn) {
-      if(this.props.isLoggedIn) {
+    if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
+      if (this.props.isLoggedIn) {
         this.props.loadCart(userId)
       } else {
         let cart = JSON.parse(localStorage.getItem('cart')) || {}
-        this.setState({cart})
+        this.setState({ cart })
         this.props.localCart(cart)
       }
     }
   }
 
-  render(){
-    const products = this.props.products
+// handleClick(event) {
 
+// }
+
+  render() {
+    const products = this.props.products || []
+    console.log('',products)
     return (
       <div>
         <ul>
           {
-              products.map(product => {
-                return (
-                  <li key={product.id}>
-                    <h3> name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
-                    {/*<button type="button" onClick={() => this.handleClick(product)}>{`Delete`}</button> */}
-                  </li>
-                )
-              })
+            products.map(product => {
+              let {quantity} = product.orderItem || 0
+              return (
+                <li key={product.id}>
+                  <h3> name: {product.title} costs {`$${product.price}`} this is how much you want to order {quantity} and we have {product.quantity} on stock </h3>
+                  <form id={"QuanitityInput"} >
+                    <label>Order Quantity</label>
+                    <input id={"quantity"}></input>
+                    <button type="button">Submmit</button>
+                  </form>
+                </li>
+              )
+            })
           }
         </ul>
       </div>
@@ -85,15 +95,15 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-      loadCart: (userId) => {
-        dispatch(fetchCart(userId))
-      },
-      localCart : (storage) => {
-        dispatch(fetchLocalStorageCart(storage))
-      },
-      deleteProduct: (product) => {
-        dispatch(deleteFromCart(orderId, product))
-      }
+    loadCart: (userId) => {
+      dispatch(fetchCart(userId))
+    },
+    localCart: (storage) => {
+      dispatch(fetchLocalStorageCart(storage))
+    },
+    deleteProduct: (product) => {
+      dispatch(deleteFromCart(orderId, product))
+    }
   }
 }
 
