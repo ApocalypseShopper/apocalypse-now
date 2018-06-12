@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const stripe = require('stripe') ('pk_test_rTH0SFU9hTdEnqYMR8sLZdGR')
+const stripe = require('stripe') ('sk_test_jfizxISnqtngwsAjpyEGTRmd')
 // const stripe = stripeLib.configureStripe('pk_test_rTH0SFU9hTdEnqYMR8sLZdGR')
 
 const postStripeCharge = res => (stripeErr, stripeRes) => {
@@ -10,15 +10,29 @@ const postStripeCharge = res => (stripeErr, stripeRes) => {
     }
   }
 
-router.get('/', (req, res, next) => {
+// router.get('/', (req, res, next) => {
+//     res.send({ message: 'Hello Stripe checkout server!', timestamp: new Date().toISOString() })
+// })
+
+// router.post('/', (req, res, next) => {
+//     stripe.charges.create(req.body, postStripeCharge(res))
+// })
+
+// module.exports = router
+
+const paymentApi = app => {
+  app.get('/', (req, res) => {
     res.send({ message: 'Hello Stripe checkout server!', timestamp: new Date().toISOString() })
-})
+  });
 
-router.post('/', (req, res, next) => {
-    stripe.charges.create(req.body, postStripeCharge(res))
-})
+  app.post('/', (req, res) => {
+    stripe.charges.create(req.body, postStripeCharge(res));
+  });
 
-module.exports = router
+  return app;
+};
+
+module.exports = paymentApi;
 
 // router.post('/', (req, res, next) => {
 //     let token = req.body.stripeToken

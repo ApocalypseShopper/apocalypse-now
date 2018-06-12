@@ -24,7 +24,7 @@ const onToken = (amount, description) => token =>
         .then(successPayment)
         .catch(errorPayment);
 
-const Checkout = ({amount}) =>
+const Checkout = (amount) =>
     <StripeCheckout
         name={'Your Cart'}
         description={'This is all your orders'}
