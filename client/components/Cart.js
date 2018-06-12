@@ -1,8 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+<<<<<<< HEAD
+import { getCart, fetchCart, postToCart, deleteFromCart } from '../store/cart'
+import { Link } from 'react-router-dom'
+import Checkout from './Checkout'
+=======
 import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart } from '../store/cart'
 
+>>>>>>> bda60efe5de248d27496354c6aa5f3bd3f3461b5
 /**
  * COMPONENT
  */
@@ -39,13 +45,26 @@ class Cart extends React.Component {
     }
   }
 
+<<<<<<< HEAD
+  handleClick(amount) {
+    event.preventDefault()
+   Checkout(amount)
+  }
+
+
+=======
+>>>>>>> bda60efe5de248d27496354c6aa5f3bd3f3461b5
   render(){
     const products = this.props.products
 
     return (
       <div>
+<<<<<<< HEAD
+          { false &&
+=======
         <ul>
           {
+>>>>>>> bda60efe5de248d27496354c6aa5f3bd3f3461b5
               products.map(product => {
                 return (
                   <li key={product.id}>
@@ -55,7 +74,9 @@ class Cart extends React.Component {
                 )
               })
           }
-        </ul>
+          <Link to="/checkout">
+              <button type="button" id="/checkout" onClick={this.handleClick}>Checkout</button>
+          </Link>
       </div>
     )
   }

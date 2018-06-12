@@ -24,7 +24,11 @@ export const deleteProduct = product => {
 }
 // Initial State
 const initialState = {
+<<<<<<< HEAD
+    cart: [],
+=======
     products: []
+>>>>>>> bda60efe5de248d27496354c6aa5f3bd3f3461b5
 }
 // Thunks
 export const fetchCart = (userId) => {

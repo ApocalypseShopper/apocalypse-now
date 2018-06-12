@@ -12,6 +12,9 @@ const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
 const seed = require('./seeds')
+const configureRoutes = require('./api');
+
+configureRoutes(app);
 
 module.exports = app
 
