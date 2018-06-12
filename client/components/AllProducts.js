@@ -7,8 +7,6 @@ import ProductCard from './containers/ProductCard'
 import { Input } from 'antd'
 import { postToCart, addToCart } from '../store/cart'
 
-const userId = 101;
-
 /**
  * COMPONENT
  */
@@ -27,7 +25,7 @@ class AllProducts extends React.Component {
 
   handleClick (product) {
       if(this.props.isLoggedIn) {
-        this.props.addProduct(userId, product)
+        this.props.addProduct(this.props.userId, product)
       } else {
         let currCart = JSON.parse(localStorage.getItem('cart')) || {}
         currCart[product.id] ? currCart[product.id] += 1 : currCart[product.id] = 1
@@ -70,7 +68,7 @@ class AllProducts extends React.Component {
           {
             displayProducts.map(product => {
               return (
-                  <ProductCard key={product.id} addToCart={this.handleClick} product={product}/>  
+                  <ProductCard key={product.id} addToCart={this.handleClick} product={product}/>
               )
             })
           }
@@ -87,7 +85,8 @@ const mapState = (state) => {
   return {
     products: state.products.allProducts,
     cart: state.cart,
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id
   }
 }
 
