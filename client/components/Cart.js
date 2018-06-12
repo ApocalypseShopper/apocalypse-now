@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart } from '../store/cart'
+import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart, updateCartQuant } from '../store/cart'
+import CartItems from './containers/CartItems'
 
 /**
  * COMPONENT
@@ -27,7 +28,7 @@ class Cart extends React.Component {
     this.state = {
       cart: {}
     }
-    // this.handleClick = this.handleClick.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -52,31 +53,19 @@ class Cart extends React.Component {
     }
   }
 
-// handleClick(event) {
+  handleSubmit(event) {
+    // console.log('hey')
 
-// }
+    }
 
   render() {
     const products = this.props.products || []
     console.log('',products)
     return (
       <div>
+        <h1>Cart</h1>
         <ul>
-          {
-            products.map(product => {
-              let {quantity} = product.orderItem || 0
-              return (
-                <li key={product.id}>
-                  <h3> name: {product.title} costs {`$${product.price}`} this is how much you want to order {quantity} and we have {product.quantity} on stock </h3>
-                  <form id={"QuanitityInput"} >
-                    <label>Order Quantity</label>
-                    <input id={"quantity"}></input>
-                    <button type="button">Submmit</button>
-                  </form>
-                </li>
-              )
-            })
-          }
+          <CartItems products={products} onSubmit={this.handleSubmit} />
         </ul>
       </div>
     )
@@ -103,6 +92,9 @@ const mapDispatch = (dispatch) => {
     },
     deleteProduct: (product) => {
       dispatch(deleteFromCart(orderId, product))
+    },
+    updateQuantity: (orderId, productId, quantity) => {
+      dispatch(updateCartQuant(orderId, productId, quantity))
     }
   }
 }

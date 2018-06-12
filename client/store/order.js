@@ -24,9 +24,6 @@ export const updateCartQuant = (orderId, prodId, quantity) => {
     return dispatch => {
         axios.put(`/${orderId}/quantity/${prodId}`, {quantity})
             .then(res => res.data)
-            .then(orderQuant => {
-                dispatch(getOrderQuant(orderQuant))
-            })
     }
 }
 

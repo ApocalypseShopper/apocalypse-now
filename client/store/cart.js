@@ -41,7 +41,7 @@ export const fetchCart = (userId) => {
 export const fetchLocalStorageCart = (localStorage) => {
     return dispatch => {
         let productIds = Object.keys(localStorage).map(ele => Number(ele))
-
+        console.log('STORE', productIds)
         Promise.all(productIds.map( (prodId) => {
             return axios.get(`/api/products/${prodId}`)
             .then(product => {
