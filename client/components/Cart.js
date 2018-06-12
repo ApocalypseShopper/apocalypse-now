@@ -40,6 +40,18 @@ class Cart extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.isLoggedIn !== this.props.isLoggedIn) {
+      if(this.props.isLoggedIn) {
+        this.props.loadCart(userId)
+      } else {
+        let cart = JSON.parse(localStorage.getItem('cart'))
+        this.setState({cart})
+        this.props.localCart(cart)
+      }
+    }
+  }
+
   render(){
     const products = this.props.products
 
@@ -66,9 +78,10 @@ class Cart extends React.Component {
  * CONTAINER
  */
 const mapState = (state) => {
+  console.log('state++++', state)
   return {
     products: state.cart.products,
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
   }
 }
 
