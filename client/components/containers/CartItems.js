@@ -18,10 +18,10 @@ const CartItems = (props) => {
             >
                 <List.Item.Meta
                 title={<Link to={`/product/${item.id}`}>{item.title}</Link>}
-                description={item.description}
+                // description={item.description}
                 />
                 <div>
-                    <h1>{item.price}</h1>
+                    <h1>{item.price}$</h1>
                 </div>
             </List.Item>
             )}
