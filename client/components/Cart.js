@@ -30,11 +30,10 @@ class Cart extends React.Component {
   }
 
   componentDidMount(){
-    console.log('isLoggedIn---',this.props.isLoggedIn)
     if(this.props.isLoggedIn) {
       this.props.loadCart(userId)
     } else {
-      let cart = JSON.parse(localStorage.getItem('cart'))
+      let cart = JSON.parse(localStorage.getItem('cart')) || {}
       this.setState({cart})
       this.props.localCart(cart)
     }
@@ -45,7 +44,7 @@ class Cart extends React.Component {
       if(this.props.isLoggedIn) {
         this.props.loadCart(userId)
       } else {
-        let cart = JSON.parse(localStorage.getItem('cart'))
+        let cart = JSON.parse(localStorage.getItem('cart')) || {}
         this.setState({cart})
         this.props.localCart(cart)
       }
@@ -78,7 +77,6 @@ class Cart extends React.Component {
  * CONTAINER
  */
 const mapState = (state) => {
-  console.log('state++++', state)
   return {
     products: state.cart.products,
     isLoggedIn: !!state.user.id,
