@@ -56,7 +56,6 @@ router.put('/:userId/products', (req, res, next) => {
     include: [{all: true}]
   })
   .then(order => {
-    console.log('******', order[0])
     return order[0].addProduct(req.body.id, {through: {quantity: req.body.quantity, fixedPrice: req.body.fixedPrice}})
   })
   .then(addedProduct => {

@@ -24,7 +24,7 @@ class AllProducts extends React.Component {
   }
 
   handleClick (product) {
-      if(false) {
+      if(this.props.isLoggedIn) {
         this.props.addProduct(userId, product)
       } else {
         let currCart = JSON.parse(localStorage.getItem('cart')) || {}
@@ -32,7 +32,6 @@ class AllProducts extends React.Component {
         localStorage.setItem('cart', JSON.stringify(currCart))
       }
   }
-
 
   handleChange (event) {
     const name = event.target.name
@@ -88,7 +87,8 @@ class AllProducts extends React.Component {
 const mapState = (state) => {
   return {
     products: state.products.allProducts,
-    cart: state.cart
+    cart: state.cart,
+    isLoggedIn: !!state.user.id
   }
 }
 
