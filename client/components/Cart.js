@@ -28,7 +28,7 @@ class Cart extends React.Component {
   componentDidUpdate(prevProps) {
     if(prevProps.isLoggedIn !== this.props.isLoggedIn) {
       if(this.props.isLoggedIn) {
-        this.props.loadCart(userId)
+        this.props.loadCart(this.props.userId)
       } else {
         let cart = JSON.parse(localStorage.getItem('cart')) || {}
         this.setState({cart})
