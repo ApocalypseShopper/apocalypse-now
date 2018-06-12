@@ -24,20 +24,23 @@ const userId = 101;  //hardCoded orderId
 class Cart extends React.Component {
   constructor(props){
     super(props)
+    this.state = {
+      cart: {}
+    }
   }
 
   componentDidMount(){
-    if(true) {
+    if(false) {
       this.props.loadCart(userId)
     } else {
-      let currCart = JSON.parse(localStorage.getItem('cart')) || {}
-      currCart[product.id] ? currCart[product.id] += 1 : currCart[product.id] = 1
-      localStorage.setItem('cart', JSON.stringify(currCart))
+      let cart = JSON.parse(localStorage.getItem('cart'))
+      this.setState({cart})
     }
   }
 
   render(){
     const products = this.props.products
+    console.log('*****', this.state.cart)
 
     return (
       <div>
