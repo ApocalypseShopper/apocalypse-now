@@ -41,7 +41,6 @@ class Cart extends React.Component {
 
   render(){
     const products = this.props.products
-    console.log('*****', this.state.cart)
 
     return (
       <div>

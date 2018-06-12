@@ -24,14 +24,10 @@ class AllProducts extends React.Component {
 
   handleClick (product) {
       if(false) {
-        console.log('HHHHHHHHH', product)
         this.props.addProduct(userId, product)
       } else {
-        console.log('heyyyyyyy')
         let currCart = JSON.parse(localStorage.getItem('cart')) || {}
-        console.log('***************',currCart[product.id])
         currCart[product.id] ? currCart[product.id] += 1 : currCart[product.id] = 1
-        console.log(currCart)
         localStorage.setItem('cart', JSON.stringify(currCart))
       }
   }
@@ -55,17 +51,13 @@ class AllProducts extends React.Component {
   }
 
   render(){
-    console.log('------cart', this.props.cart)
     const selectedCategory = this.state.catList
     const selectedName = this.state.nameList
 
     const products = this.props.products || []
-    console.log('products', products)
     const categoryFilteredProducts = products.filter(product => product.categories.map(cat => cat.name).some(cat => selectedCategory.indexOf(cat) > -1) )
     const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products
-    console.log('fist filter',firstFilter)
     const nameFilteredProducts = firstFilter.length ? firstFilter.filter(product => product.title.split(' ').some(prod => selectedName.indexOf(prod) > -1) ) : []
-    console.log('name filter', nameFilteredProducts)
     const displayProducts = nameFilteredProducts.length ? nameFilteredProducts : firstFilter
 
     return (
