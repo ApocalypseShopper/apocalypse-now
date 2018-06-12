@@ -9,6 +9,7 @@ import SingleProduct from './components/SingleProduct'
 import AddProducts from './components/AddProduct'
 import Cart from './components/Cart'
 import EditProduct from './components/EditProduct'
+import Checkout from './components/Checkout'
 
 /**
  * COMPONENT
@@ -31,6 +32,7 @@ class Routes extends Component {
         <Route path='/products/:productId/edit' component={EditProduct} />
         <Route path='/products/:productId' component={SingleProduct} />
         <Route path='/cart' component={Cart} />
+        <Route path='/checkout' render={() => <Checkout />}/>
         {
           isLoggedIn &&
             <Switch>
