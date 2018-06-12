@@ -10,6 +10,7 @@ import 'antd/dist/antd.css'
 
 // establishes socket connection
 import './socket'
+import 'antd/dist/antd.css';
 
 ReactDOM.render(
   <Provider store={store}>
