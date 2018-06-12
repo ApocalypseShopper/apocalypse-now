@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart } from '../store/cart'
+import { connect } from 'react-redux'
+import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart, updateCartQuant } from '../store/cart'
 import CartItems from './containers/CartItems'
 
 /**
@@ -23,43 +23,48 @@ import CartItems from './containers/CartItems'
 const userId = 101;  //hardCoded orderId
 
 class Cart extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       cart: {}
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount(){
-    if(this.props.isLoggedIn) {
+  componentDidMount() {
+    if (this.props.isLoggedIn) {
       this.props.loadCart(userId)
     } else {
       let cart = JSON.parse(localStorage.getItem('cart')) || {}
-      this.setState({cart})
+      this.setState({ cart })
       this.props.localCart(cart)
     }
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps.isLoggedIn !== this.props.isLoggedIn) {
-      if(this.props.isLoggedIn) {
+    if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
+      if (this.props.isLoggedIn) {
         this.props.loadCart(userId)
       } else {
         let cart = JSON.parse(localStorage.getItem('cart')) || {}
-        this.setState({cart})
+        this.setState({ cart })
         this.props.localCart(cart)
       }
     }
   }
 
-  render(){
-    const products = this.props.products
+  handleSubmit(data) {
+    this.props.updateQuantity(data)
+  }
 
+  render() {
+    const products = this.props.products || []
+    console.log('',products)
     return (
       <div>
         <h1>Cart</h1>
         <ul>
-          <CartItems products={products}/>
+          <CartItems products={products} onSubmit={this.handleSubmit} />
         </ul>
       </div>
     )
@@ -78,15 +83,18 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-      loadCart: (userId) => {
-        dispatch(fetchCart(userId))
-      },
-      localCart : (storage) => {
-        dispatch(fetchLocalStorageCart(storage))
-      },
-      deleteProduct: (product) => {
-        dispatch(deleteFromCart(orderId, product))
-      }
+    loadCart: (userId) => {
+      dispatch(fetchCart(userId))
+    },
+    localCart: (storage) => {
+      dispatch(fetchLocalStorageCart(storage))
+    },
+    deleteProduct: (product) => {
+      dispatch(deleteFromCart(orderId, product))
+    },
+    updateQuantity: (orderId, productId, quantity) => {
+      dispatch(updateCartQuant(orderId, productId, quantity))
+    }
   }
 }
 
