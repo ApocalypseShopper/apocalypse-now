@@ -69,6 +69,9 @@ class Navbar extends React.Component{
               <Menu.Item key="signup">
                 <Icon type="user-add" />Sign Up
               </Menu.Item>
+              <Menu.Item key="cart">
+                <Icon type="shopping-cart" />Cart
+              </Menu.Item>
             </Menu>
           )}
         </nav>

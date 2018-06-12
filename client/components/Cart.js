@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart } from '../store/cart'
+import CartItems from './containers/CartItems'
 
 /**
  * COMPONENT
@@ -47,15 +48,16 @@ class Cart extends React.Component {
         <h1>Cart</h1>
         <ul>
           {
-              products.map(product => {
-                return (
-                  <li key={product.id}>
-                    <h3> name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
-                    {/*<button type="button" onClick={() => this.handleClick(product)}>{`Delete`}</button> */}
-                  </li>
-                )
-              })
+              // products.map(product => {
+              //   return (
+              //     <li key={product.id}>
+              //       <h3> name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
+              //       {/*<button type="button" onClick={() => this.handleClick(product)}>{`Delete`}</button> */}
+              //     </li>
+              //   )
+              // })
           }
+          <CartItems products={products}/>
         </ul>
       </div>
     )
