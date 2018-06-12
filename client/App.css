@@ -1,0 +1,16 @@
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 75vw;
+    margin: auto;
+}
+
+.card {
+    margin-bottom: 1vh !important;
+}
+
+.inputSearch {
+    width: 12vw;
+}

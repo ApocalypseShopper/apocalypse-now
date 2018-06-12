@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { fetchProducts } from '../store/product'
+import ProductCard from './containers/ProductCard'
+import { Input } from 'antd'
 
 /**
  * COMPONENT
@@ -40,26 +42,20 @@ class AllProducts extends React.Component {
     const selectedName = this.state.nameList
 
     const products = this.props.products || []
-    console.log('products', products)
     const categoryFilteredProducts = products.filter(product => product.categories.map(cat => cat.name).some(cat => selectedCategory.indexOf(cat) > -1) )
     const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products 
-    console.log('fist filter',firstFilter)
     const nameFilteredProducts = firstFilter.length ? firstFilter.filter(product => product.title.split(' ').some(prod => selectedName.indexOf(prod) > -1) ) : []
-    console.log('name filter', nameFilteredProducts)
     const displayProducts = nameFilteredProducts.length ? nameFilteredProducts : firstFilter
 
     return (
       <div>
-        <input name='catInput' onChange={this.handleChange}/>
-        <input name='nameInput' onChange={this.handleChange}/>
-        <ul>
+        <Input name='catInput'  className="inputSearch" onChange={this.handleChange}/>
+        <Input name='nameInput'  className="inputSearch" onChange={this.handleChange}/>
+        <ul className="cardContainer">
           {
             displayProducts.map(product => {
               return (
-                <li key={product.id}>
-                  <h3>categories: {`"${product.categories.map(cat => cat.name).join(' ')}"`}  name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
-                  <button>Add to Cart</button>
-                </li>
+                <ProductCard key={product.id} {...product}/>
               )
             })
           }
