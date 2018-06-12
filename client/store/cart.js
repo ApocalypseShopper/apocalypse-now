@@ -37,6 +37,27 @@ export const fetchCart = (userId) => {
             .catch(console.error)
     }
 }
+export const fetchLocalStorageCart = (localStorage) => {
+    return dispatch => {
+        let productIds = Object.keys(localStorage).map(ele => Number(ele))
+        console.log('IDSssssss', productIds)
+
+        Promise.all(productIds.map( (prodId) => {
+            return axios.get(`/api/products/${prodId}`)
+            .then(product => {
+                console.log('lllllllll', product.data)
+                return product.data
+            })
+            .catch(console.error)
+        }))
+        .then(products => {
+            console.log('TTTTTTTTTT', products)
+            dispatch(getCart({products}))
+        })
+        .catch(console.error)
+    }
+}
+
 export const postToCart = (userId, product) => {
     return dispatch => {
         axios.put(`/api/orders/${userId}/products`, product)

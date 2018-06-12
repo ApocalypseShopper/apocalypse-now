@@ -23,7 +23,7 @@ class AllProducts extends React.Component {
   }
 
   handleClick (product) {
-      if(true) {
+      if(false) {
         console.log('HHHHHHHHH', product)
         this.props.addProduct(userId, product)
       } else {

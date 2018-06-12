@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import { getCart, fetchCart, postToCart, deleteFromCart } from '../store/cart'
+import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart } from '../store/cart'
 
 /**
  * COMPONENT
@@ -35,6 +35,7 @@ class Cart extends React.Component {
     } else {
       let cart = JSON.parse(localStorage.getItem('cart'))
       this.setState({cart})
+      this.props.localCart(cart)
     }
   }
 
@@ -74,6 +75,9 @@ const mapDispatch = (dispatch) => {
   return {
       loadCart: (userId) => {
         dispatch(fetchCart(userId))
+      },
+      localCart : (storage) => {
+        dispatch(fetchLocalStorageCart(storage))
       },
       deleteProduct: (product) => {
         dispatch(deleteFromCart(orderId, product))
