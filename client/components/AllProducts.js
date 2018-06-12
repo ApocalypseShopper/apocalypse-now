@@ -26,7 +26,7 @@ class AllProducts extends React.Component {
   }
 
   handleClick (product) {
-      if(false) {
+      if(true) {
         this.props.addProduct(userId, product)
       } else {
         let currCart = JSON.parse(localStorage.getItem('cart')) || {}

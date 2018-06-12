@@ -59,16 +59,6 @@ class Cart extends React.Component {
       <div>
         <h1>Cart</h1>
         <ul>
-          {
-              // products.map(product => {
-              //   return (
-              //     <li key={product.id}>
-              //       <h3> name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
-              //       {/*<button type="button" onClick={() => this.handleClick(product)}>{`Delete`}</button> */}
-              //     </li>
-              //   )
-              // })
-          }
           <CartItems products={products}/>
         </ul>
       </div>
