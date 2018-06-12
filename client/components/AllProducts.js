@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { fetchProducts } from '../store/product'
+import { postToCart, addToCart } from '../store/cart'
+
+const userId = 101;
 import { Button } from 'antd';
 
 /**
@@ -17,7 +20,19 @@ class AllProducts extends React.Component {
       nameList : []
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
+
+  handleClick (product) {
+      if(false) {
+        this.props.addProduct(userId, product)
+      } else {
+        let currCart = JSON.parse(localStorage.getItem('cart')) || {}
+        currCart[product.id] ? currCart[product.id] += 1 : currCart[product.id] = 1
+        localStorage.setItem('cart', JSON.stringify(currCart))
+      }
+  }
+
 
   handleChange (event) {
     const name = event.target.name
@@ -42,7 +57,7 @@ class AllProducts extends React.Component {
 
     const products = this.props.products || []
     const categoryFilteredProducts = products.filter(product => product.categories.map(cat => cat.name).some(cat => selectedCategory.indexOf(cat) > -1) )
-    const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products 
+    const firstFilter = categoryFilteredProducts.length ? categoryFilteredProducts : products
     const nameFilteredProducts = firstFilter.length ? firstFilter.filter(product => product.title.split(' ').some(prod => selectedName.indexOf(prod) > -1) ) : []
     const displayProducts = nameFilteredProducts.length ? nameFilteredProducts : firstFilter
 
@@ -56,7 +71,7 @@ class AllProducts extends React.Component {
               return (
                 <li key={product.id}>
                   <h3>categories: {`"${product.categories.map(cat => cat.name).join(' ')}"`}  name: {product.title} costs {`$${product.price}`} and we have {product.quantity} on stock</h3>
-                  <Button>Add to Cart</Button>
+                  <button onClick={() => this.handleClick(product)}>Add to Cart</button>
                 </li>
               )
             })
@@ -72,7 +87,8 @@ class AllProducts extends React.Component {
  */
 const mapState = (state) => {
   return {
-    products: state.products.allProducts
+    products: state.products.allProducts,
+    cart: state.cart
   }
 }
 
@@ -80,6 +96,9 @@ const mapDispatch = (dispatch) => {
   return {
     fetchProductsList: () => {
       dispatch(fetchProducts())
+    },
+    addProduct: (userId, product) => {
+      dispatch(postToCart(userId, product))
     }
   }
 }

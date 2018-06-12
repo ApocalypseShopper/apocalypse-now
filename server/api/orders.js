@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:userId', (req, res, next) => {
-  Order.findAll({
+  Order.findOrCreate({
     where: {
       userId: Number(req.params.userId),
       status: 'pending'
@@ -18,7 +18,7 @@ router.get('/:userId', (req, res, next) => {
     include: [{all: true}]
   })
   .then(order => {
-    res.send(order)
+    res.send(order[0])
   })
   .catch(next)
 })
@@ -47,10 +47,17 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
-router.put('/:orderId/products', (req, res, next) => {
-  Order.findById(req.params.orderId)
+router.put('/:userId/products', (req, res, next) => {
+  Order.findOrCreate({
+    where: {
+      userId: Number(req.params.userId),
+      status: 'pending'
+    },
+    include: [{all: true}]
+  })
   .then(order => {
-    return order.addProduct(req.body.id, {through: {quantity: req.body.quantity, fixedPrice: req.body.fixedPrice}})
+    console.log('******', order[0])
+    return order[0].addProduct(req.body.id, {through: {quantity: req.body.quantity, fixedPrice: req.body.fixedPrice}})
   })
   .then(addedProduct => {
     res.send(addedProduct)
