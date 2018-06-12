@@ -26,6 +26,7 @@ class Navbar extends React.Component{
     this.setState({
       current: e.key,
     });
+    console.log(e.key)
     this.props.history.push(`/${e.key}`)
   }
 
@@ -45,8 +46,11 @@ class Navbar extends React.Component{
               <Menu.Item key="products">
                 <Icon type="tool" />Products
               </Menu.Item>
-              <Menu.Item key="logout">
+              <Menu.Item key="home" onClick={this.props.handleClick}>
                 <Icon type="logout" />Log Out
+              </Menu.Item>
+              <Menu.Item key="cart">
+                <Icon type="shopping-cart" />Cart
               </Menu.Item>
             </Menu>
           ) : (
@@ -64,6 +68,9 @@ class Navbar extends React.Component{
               </Menu.Item>
               <Menu.Item key="signup">
                 <Icon type="user-add" />Sign Up
+              </Menu.Item>
+              <Menu.Item key="cart">
+                <Icon type="shopping-cart" />Cart
               </Menu.Item>
             </Menu>
           )}
