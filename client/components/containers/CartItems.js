@@ -1,7 +1,6 @@
 import React from 'react'
 import { List, Avatar, Icon } from 'antd'
 import { Link, withRouter } from 'react-router-dom'
-
 const CartItems = (props) => {
     console.log(props)
     return (
@@ -22,15 +21,10 @@ const CartItems = (props) => {
                         // description={item.description}
                     />
                     <div>
-                        {/* <h1>{item.price}</h1>
-                        <strong>You Ordered: {}</strong>
-                        <form id={"QuanitityInput"} onSubmit={()=> this.props.handleSubmit()}>
-                            <label>Order Quantity</label>
-                            <input id={"quantity"}></input>
-                            <button type="button" >Submit</button>
-                        </form> */}
-                        <select>
-                            å
+                         <h1>{item.price}</h1>
+                    
+                        <select onChange={(evt) => props.onSubmit(evt,item)}>
+                            {[1,2,3,4,5,6,7,8,9,10].map(num => (<option key={num} value={num} selected={item.orderItem ? item.orderItem.quantity === num : false}>{num}</option>))}
                         </select>
                     </div>
                 </List.Item>

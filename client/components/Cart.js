@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart, updateCartQuant } from '../store/cart'
+import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart } from '../store/cart'
+import { updateCartQuant } from '../store/order'
 import CartItems from './containers/CartItems'
 
 /**
@@ -53,10 +54,10 @@ class Cart extends React.Component {
     }
   }
 
-  handleSubmit(event) {
-    // console.log('hey')
-
-    }
+  handleSubmit(event, product) {
+    console.log(product)
+    this.props.updateQuantity(product.orderItem.orderId, product.id, event.target.value)
+  }
 
   render() {
     const products = this.props.products || []
@@ -79,6 +80,7 @@ const mapState = (state) => {
   return {
     products: state.cart.products,
     isLoggedIn: !!state.user.id,
+    cart: state.cart
   }
 }
 

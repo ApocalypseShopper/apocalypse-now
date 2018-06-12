@@ -22,7 +22,7 @@ const getOrderQuant = quantity => ({type: GET_ORDER_QUANT, quantity})
 //Thunk creators
 export const updateCartQuant = (orderId, prodId, quantity) => {
     return dispatch => {
-        axios.put(`/${orderId}/quantity/${prodId}`, {quantity})
+        axios.put(`api/orders/${orderId}/quantity/${prodId}`, {quantity})
             .then(res => res.data)
     }
 }
