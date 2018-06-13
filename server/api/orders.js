@@ -10,18 +10,24 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:userId', (req, res, next) => {
-  Order.findOrCreate({
-    where: {
-      userId: Number(req.params.userId),
-      status: 'pending'
-    },
-    include: [{ all: true }]
-  })
-    .then(order => {
-      res.send(order[0])
+  if (req.user && req.user.id === Number(req.params.userId)) {
+    Order.findOrCreate({
+      where: {
+        userId: Number(req.params.userId),
+        status: 'pending'
+      },
+      include: [{ all: true }]
     })
-    .catch(next)
-})
+      .then(order => {
+        res.send(order[0])
+      })
+      .catch(next)
+    } else {
+      res.send("not allowed")
+    }
+  }
+
+)
 
 router.get('/:orderId', (req, res, next) => {
   Order.findOne({
@@ -48,31 +54,39 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:userId/products', (req, res, next) => {
-  Order.findOrCreate({
-    where: {
-      userId: Number(req.params.userId),
-      status: 'pending'
-    },
-    include: [{ all: true }]
-  })
-    .then(order => {
-      return order[0].addProduct(req.body.id, { through: { quantity: 1, fixedPrice: req.body.fixedPrice } })
+  if (req.user && req.user.id === Number(req.params.userId)){
+    Order.findOrCreate({
+      where: {
+        userId: Number(req.params.userId),
+        status: 'pending'
+      },
+      include: [{ all: true }]
     })
-    .then(addedProduct => {
-      res.send(addedProduct)
-    })
-    .catch(next)
+      .then(order => {
+        return order[0].addProduct(req.body.id, { through: { quantity: 1, fixedPrice: req.body.fixedPrice } })
+      })
+      .then(addedProduct => {
+        res.send(addedProduct)
+      })
+      .catch(next)
+    } else {
+      res.send("not allowed")
+    }
 })
 
 router.delete('/:orderId/products', (req, res, next) => {
-  Order.findById(req.params.orderId)
-    .then(order => {
-      return order.removeProduct(req.body.id)
-    })
-    .then(() => {
-      res.sendStatus(200)
-    })
-    .catch(next)
+  if (req.user && req.user.id === Number(req.params.userId)){
+    Order.findById(req.params.orderId)
+      .then(order => {
+        return order.removeProduct(req.body.id)
+      })
+      .then(() => {
+        res.sendStatus(200)
+      })
+      .catch(next)
+  } else {
+    res.send("not allowed")
+  }
 })
 
 router.put('/:orderId/quantity/:productId', (req, res, next) => {
