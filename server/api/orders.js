@@ -82,8 +82,8 @@ router.put('/:orderId/quantity/:productId', (req, res, next) => {
     })
     .then(foundOrder => {
       let [product] = foundOrder.products.filter(prod => prod.id === Number(req.params.productId))
-      
-      foundOrder.removeProduct(product)
+
+      // foundOrder.removeProduct(product)
       foundOrder.addProduct(product, { through: { quantity: req.body.quantity, fixedPrice: product.price } })
       res.send('We hit')
     })

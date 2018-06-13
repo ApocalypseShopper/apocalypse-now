@@ -8,21 +8,6 @@ import CartItems from './containers/CartItems'
 /**
  * COMPONENT
  */
-
-//  let hardCodedCart = [
-//      {id: 2,title: 'stuff', description: 'awesome', price: 100, quantity: 35 },
-//      {id: 23,title: 'more stuff', description: 'awesome', price: 102, quantity: 9 },
-//      {id: 3,title: 'Just Du it', description: 'awesome', price: 104, quantity: 14 },
-//      {id: 4,title: 'Jessie has a nice beard', description: 'awesome', price: 10.00, quantity: 13 },
-//      {id: 5,title: 'Thanh loves cookies', description: 'awesome', price: 12, quantity: 0 },
-//      {id: 53,title: 'Ivan is a great CTO', description: 'awesome', price: 115, quantity: 10 },
-//      {id: 52,title: 'We took a lot of time naming these', description: 'awesome', price: 25, quantity: 1 },
-//      {id: 51,title: 'Hard coding is boring!!', description: 'awesome', price: 100, quantity: 56 },
-//      {id: 50,title: 'Can\'t wait to sleep', description: 'awesome', price: 40, quantity: 34 },
-//  ]
-
-const userId = 101;  //hardCoded orderId
-
 class Cart extends React.Component {
   constructor(props) {
     super(props)
@@ -32,9 +17,9 @@ class Cart extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    if (this.props.isLoggedIn) {
-      this.props.loadCart(userId)
+  componentDidMount(){
+    if(this.props.isLoggedIn) {
+      this.props.loadCart(this.props.userId)
     } else {
       let cart = JSON.parse(localStorage.getItem('cart')) || {}
       this.setState({ cart })
@@ -43,9 +28,9 @@ class Cart extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
-      if (this.props.isLoggedIn) {
-        this.props.loadCart(userId)
+    if(prevProps.isLoggedIn !== this.props.isLoggedIn) {
+      if(this.props.isLoggedIn) {
+        this.props.loadCart(this.props.userId)
       } else {
         let cart = JSON.parse(localStorage.getItem('cart')) || {}
         this.setState({ cart })
@@ -61,10 +46,18 @@ class Cart extends React.Component {
 
   render() {
     const products = this.props.products || []
-    console.log('',products)
+    let total=0
+    if(products.length > 0) {
+      products.forEach(product => {
+        let orderItem = product.orderItem || {quantity: 0}
+        total += product.price * orderItem.quantity
+      })
+    }
+
     return (
       <div>
         <h1>Cart</h1>
+        <h1>Your total: {`${total}`}</h1>
         <ul>
           <CartItems products={products} onSubmit={this.handleSubmit} />
         </ul>
@@ -80,7 +73,7 @@ const mapState = (state) => {
   return {
     products: state.cart.products,
     isLoggedIn: !!state.user.id,
-    cart: state.cart
+    userId: state.user.id
   }
 }
 

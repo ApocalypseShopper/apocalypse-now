@@ -16,5 +16,30 @@
 }
 
 .cartContainer {
-    width: 75vw
+    width: 60vw
+}
+
+.homeContainer {
+    width: 100vw;
+    height: 95vh;
+    background-color: #40a9ff;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* align horizontal */
+}
+
+.title {
+    padding-right: 5vh;
+    font-size: 8em;
+}
+
+.tent {
+    width: 50vh;
+    height: 50vh;
 }

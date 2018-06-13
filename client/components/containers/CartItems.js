@@ -22,7 +22,7 @@ const CartItems = (props) => {
                     />
                     <div>
                          <h1>{item.price}</h1>
-                    
+
                         <select onChange={(evt) => props.onSubmit(evt,item)}>
                             {[1,2,3,4,5,6,7,8,9,10].map(num => (<option key={num} value={num} selected={item.orderItem ? item.orderItem.quantity === num : false}>{num}</option>))}
                         </select>
