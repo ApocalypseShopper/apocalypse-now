@@ -12,7 +12,7 @@ const ProductCard = (props) => {
         actions={[<Icon onClick={() => {props.addToCart(props.product)}} type="shopping-cart" />,<Icon type="eye" onClick={() => props.history.push(`/products/${props.product.id}`)}/>]}
         >
                 <Meta
-                title={props.product.title + ' ' + props.product.price}
+                title={props.product.title + ' $' + props.product.price}
                 description={`"${props.product.categories.map(cat => cat.name).join(' ')}"`}
                 />
         </Card> 

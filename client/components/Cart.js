@@ -56,7 +56,7 @@ class Cart extends React.Component {
     return (
       <div>
         <h1>Cart</h1>
-        <h1>Your total: {`${total}`}</h1>
+        <h1>Your total: {`$${total}`}</h1>
         <ul>
           <CartItems products={products} onSubmit={this.handleSubmit} />
         </ul>
