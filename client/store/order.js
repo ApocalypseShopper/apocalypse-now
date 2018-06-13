@@ -5,6 +5,7 @@ import axios from 'axios'
 const GET_ORDERS = 'GET_ORDERS'
 const GET_SINGLE_ORDER = 'GET_SINGLE_ORDER'
 const POST_ORDER = 'POST_ORDER'
+const GET_ORDER_QUANT = 'GET_ORDER_QUANT'
 //Initial state
 
 const initialState = {
@@ -16,8 +17,16 @@ const initialState = {
 const getOrders = orders => ({type: GET_ORDERS, orders})
 const getSingleOrder = order => ({type: GET_SINGLE_ORDER, order})
 const createOrder = order => ({type: POST_ORDER, order})
+const getOrderQuant = quantity => ({type: GET_ORDER_QUANT, quantity})
 
 //Thunk creators
+export const updateCartQuant = (orderId, prodId, quantity) => {
+    return dispatch => {
+        axios.put(`api/orders/${orderId}/quantity/${prodId}`, {quantity})
+            .then(res => res.data)
+    }
+}
+
 export const fetchOrders = () => {
     return dispatch => {
         axios.get('/api/orders')

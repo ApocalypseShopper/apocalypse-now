@@ -103,7 +103,7 @@ const syncDb = () => db.sync()
 if (require.main === module) {
   sessionStore.sync()
     .then(syncDb)
-    //.then(seed)
+    // .then(seed)
     .then(createApp)
     .then(startListening)
 } else {
