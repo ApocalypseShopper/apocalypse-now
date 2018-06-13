@@ -22,17 +22,14 @@ class Navbar extends React.Component{
   }
 
   handleClick = (e) => {
-    console.log('click ', e);
     this.setState({
       current: e.key,
     });
-    console.log(e.key)
     this.props.history.push(`/${e.key}`)
   }
 
   render(){
     const {isLoggedIn} = this.props
-    console.log(this.props)
     return (
       <div>
         <nav>

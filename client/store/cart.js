@@ -24,7 +24,8 @@ export const deleteProduct = product => {
 }
 // Initial State
 const initialState = {
-    products: []
+    products: [],
+    quantity: {}
 }
 // Thunks
 export const fetchCart = (userId) => {

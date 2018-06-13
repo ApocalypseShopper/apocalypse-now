@@ -32,7 +32,7 @@ const Product = db.define('product', {
     imageUrl: {
         type: Sequelize.TEXT,
         allowNull: false,
-        defaultValue: 'https://cdn.shopify.com/s/files/1/1017/2183/t/2/assets/live-preview-potato.png?4854792436625201403',
+        defaultValue: 'http://www.safetysign.com/images/source/large-images/J6805.png',
         validate: {
             notEmpty: ''
         }

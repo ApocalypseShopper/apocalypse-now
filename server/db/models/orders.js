@@ -8,4 +8,9 @@ const Order = db.define('order', {
   },
 })
 
+Order.prototype.updateQuantity = function (quantity, product) {
+  this.removeProduct(product)
+  this.addProduct(product, { through: { quantity: product.quantity, fixedPrice: product.fixedPrice } })
+}
+
 module.exports = Order
