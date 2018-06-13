@@ -2,7 +2,6 @@ import React from 'react'
 import { List, Avatar, Icon } from 'antd'
 import { Link, withRouter } from 'react-router-dom'
 const CartItems = (props) => {
-    console.log(props)
     return (
         <List
             className="cartContainer"

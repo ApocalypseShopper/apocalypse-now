@@ -40,7 +40,6 @@ class Cart extends React.Component {
   }
 
   handleSubmit(event, product) {
-    console.log(product)
     this.props.updateQuantity(product.orderItem.orderId, product.id, event.target.value)
   }
 

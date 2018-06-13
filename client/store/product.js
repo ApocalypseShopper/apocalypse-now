@@ -55,7 +55,6 @@ export const postProduct = (product) => {
 }
 
 export const putProduct = (id, product) => {
-    console.log(product)
     return dispatch => {
         axios.put(`/api/products/${id}`, {...product})
         .then(res => res.data)
