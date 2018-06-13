@@ -7,7 +7,7 @@ const PAYMENT_SERVER_URL = 'http://localhost:8080/api/checkout';
 
 const CURRENCY = 'USD';
 
-const fromCentToCent = amount => amount * 100;
+const fromDollarToCent = amount => amount * 100;
 
 const successPayment = data => {
   alert('Payment Successful');
@@ -23,17 +23,17 @@ const onToken = (amount, description) => token =>
       description,
       source: token.id,
       currency: CURRENCY,
-      amount: fromCentToCent(amount)
+      amount: fromDollarToCent(amount)
     })
     .then(successPayment)
     .catch(errorPayment);
 
-const Stripe = ({}) => (
+const Stripe = ({ amount }) => (
     <StripeCheckout
       name="Cart"
       description="Your Orders: Pay us"
-      amount={fromCentToCent(200)}
-      token={onToken(200, 'Your Orders: Pay us')}
+      amount={fromDollarToCent(amount)}
+      token={onToken(amount, 'Your Orders: Pay us')}
       currency={CURRENCY}
       stripeKey={STRIPE_PUBLISHABLE}
     />
