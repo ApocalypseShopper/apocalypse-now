@@ -62,8 +62,8 @@ class AllProducts extends React.Component {
 
     return (
       <div>
-        <Input name='catInput'  className="inputSearch" onChange={this.handleChange}/>
-        <Input name='nameInput'  className="inputSearch" onChange={this.handleChange}/>
+        <Input placeholder="Categories" name='catInput'  className="inputSearch" onChange={this.handleChange}/>
+        <Input placeholder="Product Name" name='nameInput'  className="inputSearch" onChange={this.handleChange}/>
         <ul className="cardContainer">
           {
             displayProducts.map(product => {
