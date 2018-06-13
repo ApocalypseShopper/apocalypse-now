@@ -8,7 +8,7 @@ const CartItems = (props) => {
             itemLayout="vertical"
             size="small"
             dataSource={props.products}
-            footer={<div><b>Survive</b> footer part</div>}
+            footer={<div><b>Survive</b></div>}
             renderItem={item => (
                 <List.Item
                     key={item.title}

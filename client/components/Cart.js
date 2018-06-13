@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { getCart, fetchCart, postToCart, deleteFromCart, fetchLocalStorageCart } from '../store/cart'
 import { updateCartQuant } from '../store/order'
 import CartItems from './containers/CartItems'
+import Checkout from './Checkout'
 
 /**
  * COMPONENT
@@ -57,6 +58,7 @@ class Cart extends React.Component {
       <div>
         <h1>Cart</h1>
         <h1>Your total: {`$${total.toFixed(2)}`}</h1>
+        <Checkout amount={total.toFixed(2)}/>
         <ul>
           <CartItems products={products} onSubmit={this.handleSubmit} />
         </ul>
